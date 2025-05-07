@@ -65,7 +65,7 @@ export const TextField = <T extends FieldValues>({
   className,
   inputClass,
   disabled = false,
-  readOnly
+  readOnly,
 }: TextFieldProps<T>) => {
   const { control } = useFormContext<T>();
   return (
@@ -92,7 +92,7 @@ export const TextField = <T extends FieldValues>({
                 )}
                 id={name}
                 disabled={disabled}
-				readOnly={readOnly}
+                readOnly={readOnly}
               />
 
               {loading && <LoadingSpinner className="absolute right-4" />}

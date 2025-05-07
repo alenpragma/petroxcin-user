@@ -37,6 +37,7 @@ import {
   showSuccessModal,
 } from "@/src/components/shared/toastAlert/ToastSuccess";
 import { IoMdShareAlt } from "react-icons/io";
+import { PhoneNumberField } from "../form copy/fields/PhoneNumberField";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -62,14 +63,15 @@ export default function RegisterForm() {
       showSuccessModal("Success", data?.data?.message);
     },
     onError(err: any) {
-      showErrorModal("!Opps", err?.message?.email[0]);
+      const mobileError = err?.message?.mobile[0];
+      if (mobileError) {
+        showErrorModal("Oops!", mobileError);
+      }
     },
   });
   const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
     if ("preventDefault" in data) return;
-
     const { confirm_password, refer_code, ...rest } = data;
-
     const finalData = {
       ...rest,
       ...(refer_code ? { refer_code } : {}),
@@ -135,14 +137,19 @@ export default function RegisterForm() {
                   <AiOutlineMail className="absolute top-[42px] size-4 text-[#898989] left-1" />
                 </div>
                 <div className="relative">
-                  <TextField
+                  <PhoneNumberField
+                    name="mobile"
+                    label="Mobile"
+                    inputClass="pl-8"
+                  />
+                  {/* <TextField
                     name="mobile"
                     label="Mobile"
                     placeholder="Mobile Number"
                     type="number"
                     inputClass="pl-8"
-                  />
-                  <MdSmartphone className="absolute top-[42px] size-4 text-[#898989] left-1" />
+                  /> */}
+                  {/* <MdSmartphone className="absolute top-[42px] size-4 text-[#898989] left-1" /> */}
                 </div>
                 <div className="relative">
                   <TextField

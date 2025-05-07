@@ -1,5 +1,4 @@
 import InvestHistoryComponents from "@/src/components/dashboard/investHistory/InvestHistory";
-import { getData } from "@/src/lib/fetch/getData";
 import { Metadata } from "next";
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -10,10 +9,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 const InvestHistoryPage = async () => {
-  const transactionList = await getData("transactions");
   return (
     <div>
-      <InvestHistoryComponents transactionList={transactionList} />
+      <InvestHistoryComponents />
     </div>
   );
 };
