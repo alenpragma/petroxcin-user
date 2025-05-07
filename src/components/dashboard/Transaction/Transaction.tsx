@@ -7,9 +7,13 @@ import DashboardTitle from "@/src/components/shared/Title/DashboardTitle";
 import { SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { ITransaction } from "@/src/types/dashboard/transactionType/transactionType";
 import { DateFormate } from "../../shared/DateFormate/DateFormate";
 import { cn } from "@/src/lib/utils";
+import { useState } from "react";
+import { useGetData } from "@/src/utils/fetch/axiosConfig/FetchData";
+import { IInvestHistory } from "@/src/types/dashboard/investHistory/investHostory";
+import { SkeletonRow } from "../investHistory/InvestHistory";
+import Pagination from "@/src/components/pagination/Pagination";
 
 const validationSchema = z.object({
   days: z.string().optional(),
@@ -23,12 +27,18 @@ const options = [
 
 type searchField = z.infer<typeof validationSchema>;
 
-const TransactionComponents = ({
-  transactionList,
-}: {
-  transactionList: ITransaction;
-}) => {
-  console.log(transactionList);
+const TransactionComponents = () => {
+  const [page, setPage] = useState(1);
+  const queryParams = new URLSearchParams();
+  queryParams.append("per_page", "10");
+  queryParams.append("page", page.toString());
+  const { data: transaction, isLoading } = useGetData(
+    ["investHistory", page],
+    `/transactions?${queryParams.toString()}`
+  );
+  const currentPage = transaction?.current_page ?? 1;
+  const lastPage = transaction?.last_page ?? 1;
+
   const headers = [
     "SL",
     "Time",
@@ -67,25 +77,34 @@ const TransactionComponents = ({
         </div>
       </div>
       <div>
-        <UseTable headers={headers} className="rounded-md">
-          {transactionList?.data.map((item, index) => (
-            <tr className="">
-              <TData>{index + 1}</TData>
-              <TData>{DateFormate(item.created_at)}</TData>
-              <TData>{item.transaction_id}</TData>
-              <TData
-                className={cn(
-                  item.type === "-" ? "text-red-500" : "text-green-500"
-                )}
-              >
-                {item.type === "-" ? "(-)" : "(+)"} ${item.amount}
-              </TData>
-              <TData>{item.remark}</TData>
-              <TData>{item.details}</TData>
-            </tr>
-          ))}
-        </UseTable>
-      </div>
+        {isLoading ? (
+          Array.from({ length: 5 }).map((_, i) => <SkeletonRow key={i} />)
+        ) : (
+          <UseTable headers={headers} className="rounded-md">
+            {transaction?.data.map((item: IInvestHistory, index: number) => (
+              <tr className="">
+                <TData>{(currentPage - 1) * 10 + index + 1}</TData>
+                <TData>{DateFormate(item.created_at)}</TData>
+                <TData>{item.transaction_id}</TData>
+                <TData
+                  className={cn(
+                    item.type === "-" ? "text-red-500" : "text-green-500"
+                  )}
+                >
+                  {item.type === "-" ? "(-)" : "(+)"} ${item.amount}
+                </TData>
+                <TData>{item.remark}</TData>
+                <TData>{item.details}</TData>
+              </tr>
+            ))}
+          </UseTable>
+        )}
+      </div>{" "}
+      <Pagination
+        currentPage={currentPage}
+        lastPage={lastPage}
+        onPageChange={setPage}
+      />
     </div>
   );
 };

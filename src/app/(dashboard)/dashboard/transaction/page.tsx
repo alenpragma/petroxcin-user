@@ -1,5 +1,4 @@
 import TransactionComponents from "@/src/components/dashboard/Transaction/Transaction";
-import { getData } from "@/src/lib/fetch/getData";
 import { Metadata } from "next";
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -10,10 +9,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 const TransactionPage = async () => {
-  const transactionList = await getData("transactions");
   return (
     <div>
-      <TransactionComponents transactionList={transactionList} />
+      <TransactionComponents />
     </div>
   );
 };

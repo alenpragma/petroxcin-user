@@ -13,9 +13,13 @@ import { SubmitButton } from "../../form copy/fields/SubmitButton";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import axiosInstance from "@/src/utils/fetch/axiosConfig/axiosConfig";
+import {
+  showErrorModal,
+  showSuccessModal,
+} from "../../shared/toastAlert/ToastSuccess";
 
 const FormSchema = z.object({
-  amount: z.string().nonempty(),
+  amount: z.string().nonempty({ message: "Enter amount" }),
 });
 type FormType = z.infer<typeof FormSchema>;
 
@@ -39,14 +43,14 @@ const PlanListComponents = ({ packageList }: { packageList: IPlan[] }) => {
     },
     onSuccess: (data: any) => {
       if (data?.data?.status === true) {
-        alert(data?.data?.message);
+        showSuccessModal("Success", data?.data?.message);
         setOpen(false);
       } else if (data?.data?.status === false) {
-        alert(data?.data?.message);
+        showErrorModal("!Opps", data?.data?.message);
       }
     },
     onError() {
-      console.log("something went worng");
+      showErrorModal("!Opps", "Something wrong");
     },
   });
   const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
