@@ -41,7 +41,7 @@ export async function getData(endpoint: string) {
     const cookieStore = await cookies();
     const token = cookieStore.get("yeldoToken")?.value;
 
-    const url = `${process.env.BASE_URL}/${endpoint}`;
+    const url = `https://api.petroxcin.com/api/user/${endpoint}`;
     console.log(`Fetching from: ${url}`);
 
     const res = await fetch(url, {

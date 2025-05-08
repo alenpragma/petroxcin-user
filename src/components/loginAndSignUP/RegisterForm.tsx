@@ -63,12 +63,20 @@ export default function RegisterForm() {
       showSuccessModal("Success", data?.data?.message);
     },
     onError(err: any) {
-      console.log(err)
-      const mobileError = err?.message?.mobile[0];
-      if (mobileError) {
-        showErrorModal("Oops!", mobileError);
+      console.log('Full error:', err);
+    
+      const mobileError = err?.message?.errors?.mobile?.[0];
+      const emailField = err?.message?.errors?.email;
+      const emailError = Array.isArray(emailField) ? emailField[0] : emailField;
+    
+      console.log('mobileError:', mobileError);
+      console.log('emailError:', emailError);
+    
+      if (mobileError || emailError) {
+        showErrorModal("Oops!", mobileError || emailError);
       }
-    },
+    }
+    
   });
   const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
     if ("preventDefault" in data) return;
