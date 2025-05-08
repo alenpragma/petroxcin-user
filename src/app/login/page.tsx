@@ -3,12 +3,12 @@ import { Metadata } from "next";
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return {
-    title: "Login | Petroxcin", 
+    title: "Login | Petroxcin",
     description: "View your profile and dashboard overview.",
   };
 };
 
-const LoginPage = () => {
+const LoginPage = async () => {
   return (
     <>
       <LoginFormComponent />

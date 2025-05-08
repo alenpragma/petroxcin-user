@@ -41,14 +41,15 @@ axiosInstance.interceptors.response.use(
     return responseObject;
   },
   (error) => {
-    // if (
-    //   error.response &&
-    //   (error.response.status === 401 || error.response.status === 403)
-    // ) {
-    // }
+    console.log(error)
+    if (
+      error.response &&
+      (error.response.status === 401 || error.response.status === 403)
+    ) {
+    }
     const responseObject: IGenericErrorResponse = {
       statusCode: error?.response?.status || 500,
-      message: error?.response?.data?.errors || "Something went wrong",
+      message: error?.response?.data || "Something went wrong",
       success: error?.response?.data?.success,
     };
     // return responseObject;

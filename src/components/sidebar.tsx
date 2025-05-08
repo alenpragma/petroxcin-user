@@ -34,7 +34,6 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
   const navItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
     { icon: PlusCircle, label: "Add Fund", href: "/dashboard/add-fund" },
-    { icon: ClockIcon, label: "Payment Log", href: "/dashboard/payment-log" },
     { icon: ListChecks, label: "Plan List", href: "/dashboard/plan-list" },
     {
       icon: History,

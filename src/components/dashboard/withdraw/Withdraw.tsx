@@ -40,10 +40,11 @@ const WithdrawComponents = () => {
       return response;
     },
     onSuccess: (data: any) => {
-      showSuccessModal("Success", "Succefully Withdraw");
+      showSuccessModal("Success", data?.data?.message);
+      formRef.current?.reset();
     },
     onError(err: any) {
-      showErrorModal("Error", "Something wrong");
+      showErrorModal("!Opps", err?.message?.message);
     },
   });
   const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
@@ -54,7 +55,7 @@ const WithdrawComponents = () => {
     };
     mutate(finalData);
   };
-  // formRef.current?.reset();
+  
   return (
     <>
       <div className="md:w-6/12 w-full mx-auto">
@@ -89,7 +90,12 @@ const WithdrawComponents = () => {
                 readOnly
               />
             </div>
-            <SubmitButton width="full" label="Submit" />
+            <SubmitButton
+              width="full"
+              label="Submit"
+              isLoading={isPending}
+              loadingLabel="Processing.."
+            />{" "}
           </GenericForm>
         </div>
       </div>
