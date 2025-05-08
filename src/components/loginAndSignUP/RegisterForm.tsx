@@ -63,6 +63,7 @@ export default function RegisterForm() {
       showSuccessModal("Success", data?.data?.message);
     },
     onError(err: any) {
+      console.log(err)
       const mobileError = err?.message?.mobile[0];
       if (mobileError) {
         showErrorModal("Oops!", mobileError);

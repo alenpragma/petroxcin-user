@@ -51,8 +51,9 @@ export default function LoginFormComponent() {
       const response = await axiosInstance.post(`/login`, data);
       return response;
     },
-    onSuccess: (data: any) => {
+    onSuccess: (data: any) => {    console.log(data)
       if (data?.success === true) {
+    
         Cookies.set("yeldoToken", data?.data?.data?.token, { expires: 3 });
         router.push("/dashboard");
         showSuccessModal("Success", data?.data?.message);
