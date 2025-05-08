@@ -4,7 +4,6 @@ import { cn } from "@/src/lib/utils";
 import {
   LayoutDashboard,
   PlusCircle,
-  ClockIcon,
   ListChecks,
   History,
   ArrowLeftRight,
