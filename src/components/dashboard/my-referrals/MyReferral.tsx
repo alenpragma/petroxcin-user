@@ -8,6 +8,12 @@ import DashboardTitle from "@/src/components/shared/Title/DashboardTitle";
 import { SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useState } from "react";
+import { useGetData } from "@/src/utils/fetch/axiosConfig/FetchData";
+import { SkeletonRow } from "@/src/components/shared/skelton/Skelton";
+import { IReferral } from "@/src/types/dashboard/myReferral/myReferral";
+import { DateFormate } from "@/src/components/shared/DateFormate/DateFormate";
+import Pagination from "@/src/components/pagination/Pagination";
 
 const validationSchema = z.object({
   days: z.string().optional(),
@@ -23,14 +29,28 @@ type searchField = z.infer<typeof validationSchema>;
 
 const MyReferralComponents = () => {
   const headers = [
+    "SL",
+    "Joined At",
     "Username",
     "Email",
     "Invest",
     "Lavel",
     "Status",
-    "Joined At",
   ];
   const formSubmit: SubmitHandler<searchField> = async (data) => {};
+
+  const [page, setPage] = useState(1);
+  const queryParams = new URLSearchParams();
+  queryParams.append("per_page", "10");
+  queryParams.append("page", page.toString());
+  const { data: myReferral, isLoading } = useGetData(
+    ["myReferral", page],
+    `/direct-refer?${queryParams.toString()}`
+  );
+  const currentPage = myReferral?.current_page ?? 1;
+  const lastPage = myReferral?.last_page ?? 1;
+
+  console.log(myReferral);
 
   return (
     <div className="bg-white ">
@@ -60,27 +80,37 @@ const MyReferralComponents = () => {
         </div>
       </div>
       <div>
-        <UseTable headers={headers} className="rounded-md">
-          <tr className="">
-            <TData>New Username 1</TData>
-            <TData>newuser@gmail.com</TData>
-            <TData>200</TData> 
-            <TData>2</TData>
-            <TData>
-              <Status title="Active" />
-            </TData>
-            <TData>24/01/2025 - 11.12 AM</TData>
-          </tr>
-          <tr className="">
-            <TData>New Username 1</TData>
-            <TData>newuser@gmail.com</TData> <TData>200</TData>
-            <TData>2</TData>
-            <TData>
-              <Status title="InActive" />
-            </TData>
-            <TData>24/01/2025 - 11.12 AM</TData>
-          </tr>
-        </UseTable>
+        <div className="p-4">
+          {isLoading ? (
+            Array.from({ length: 5 }).map((_, i) => <SkeletonRow key={i} />)
+          ) : (
+            <UseTable headers={headers} className="rounded-md">
+              {myReferral?.data?.map((item: IReferral, index: number) => (
+                <tr key={item.id}>
+                  <TData>{(currentPage - 1) * 10 + index + 1}</TData>
+                  <TData>{DateFormate(item.created_at)}</TData>
+
+                  <TData>{item.name}</TData>
+                  <TData>{item.email}</TData>
+                  <TData>$200</TData>
+                  <TData>2</TData>
+                  <TData>
+                    {item.is_active === "0" ? (
+                      <Status title="InActive" />
+                    ) : (
+                      <Status title="Active" />
+                    )}
+                  </TData>
+                </tr>
+              ))}
+            </UseTable>
+          )}
+        </div>
+        <Pagination
+        currentPage={currentPage}
+        lastPage={lastPage}
+        onPageChange={setPage}
+      />
       </div>
     </div>
   );
