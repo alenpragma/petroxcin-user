@@ -1,12 +1,21 @@
 export type IInvestHistory = {
   id: number;
-  user_id: string;
-  amount: string;
-  transaction_id: string;
-  type: string;
-  status: string;
-  remark: string;
-  details: string;
+  user_id: number;
+  package_name: string;
+  package_id: number;
+  return_type: 'daily' | 'weekly' | 'monthly';
+  investment: number;
+  duration: number;
+  payable_amount: number | null;
+  total_receive: number;
+  total_receive_day: number;
+  total_due_day: number;
+  start_date: string;
+  next_cron: string;
+  last_cron: string;
   created_at: string;
   updated_at: string;
+  status: string;
+  interest_rate: number;
+  daily_roi: number;
 };

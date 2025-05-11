@@ -10,7 +10,8 @@ const Status = ({ title }: { title: string }) => {
             "bg-[#D8FFF4] border border-[#7EDAC5] text-[#10665D]"),
         title === "Pending" ||
           (title === "InActive" &&
-            "bg-[#FFEDC9] border border-[#DDAA47] text-[#FFA800]")
+            "bg-[#FFEDC9] border border-[#DDAA47] text-[#FFA800]"),
+        title === "Completed" && " border-[#7EDAC5] text-[#10665D] w-fit"
       )}
     >
       {title}

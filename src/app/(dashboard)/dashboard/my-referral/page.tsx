@@ -1,4 +1,5 @@
-import ReferralComponents from "@/src/components/dashboard/my-referral/MyReferral";
+import MyReferralComponents from "@/src/components/dashboard/my-referrals/MyReferral";
+import ReferralComponents from "@/src/components/dashboard/my-team/MyTeam";
 import { Metadata } from "next";
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -9,6 +10,6 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 const MyReferralPage = async () => {
-  return <ReferralComponents />;
+  return <MyReferralComponents />;
 };
 export default MyReferralPage;
