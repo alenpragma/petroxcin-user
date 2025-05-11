@@ -11,10 +11,10 @@ import { DateFormate } from "../../shared/DateFormate/DateFormate";
 import { cn } from "@/src/lib/utils";
 import { useState } from "react";
 import { useGetData } from "@/src/utils/fetch/axiosConfig/FetchData";
-import { IInvestHistory } from "@/src/types/dashboard/investHistory/investHostory";
-import { SkeletonRow } from "../investHistory/InvestHistory";
 import Pagination from "@/src/components/pagination/Pagination";
 import { ITransactions } from "@/src/types/dashboard/transactionType/transactionType";
+import Status from "@/src/components/shared/Status/Status";
+import { SkeletonRow } from "@/src/components/shared/skelton/Skelton";
 
 const validationSchema = z.object({
   days: z.string().optional(),
@@ -47,6 +47,7 @@ const TransactionComponents = () => {
     "Amount",
     "Remark",
     "Details",
+    "Status",
   ];
   const formSubmit: SubmitHandler<searchField> = async (data) => {};
 
@@ -96,6 +97,9 @@ const TransactionComponents = () => {
                 </TData>
                 <TData>{item.remark}</TData>
                 <TData>{item.details}</TData>
+                <TData>
+                  <Status title={item.status} />
+                </TData>
               </tr>
             ))}
           </UseTable>

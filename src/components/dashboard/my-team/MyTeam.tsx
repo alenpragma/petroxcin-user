@@ -260,62 +260,17 @@ export default function MyTeamComponents() {
 
   const { data: teamHistory, isLoading } = useGetData(
     ["team", page],
-    `/team&${queryParams.toString()}`
+    `/team?${queryParams.toString()}`
   );
 
-  // const teamData: User[] = teamHistory?.team ?? [];
+  const teamData: User[] = teamHistory?.team ?? [];
 
-  const teamData: User[] = [
-    {
-      id: 1,
-      name: "rana khan",
-      email: "user1@gmail.com",
-      level: 0,
-      refer_code: "B1A836",
-      team: [
-        {
-          id: 5,
-          name: "rana khan",
-          email: "user2@gmail.com",
-          level: 1,
-          refer_code: "B1A806",
-          team: [
-            {
-              id: 6,
-              name: "rana khan",
-              email: "user3@gmail.com",
-              level: 2,
-              refer_code: "B0E8C3",
-              team: [
-                {
-                  id: 7,
-                  name: "rana khan",
-                  email: "user4@gmail.com",
-                  level: 3,
-                  refer_code: "1D8E85",
-                  team: [],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: 8,
-          name: "rana khan",
-          email: "user5@gmail.com",
-          level: 1,
-          refer_code: "5811B2",
-          team: [],
-        },
-      ],
-    },
-  ];
   
-
+console.log(teamHistory)
   return (
     <div className="bg-white rounded shadow">
       <div className="p-4">
-        <DashboardTitle title="My Referral" />
+        <DashboardTitle title="My Team" />
       </div>
       <table className="w-full border mt-3">
         <thead className="bg-blue-100">

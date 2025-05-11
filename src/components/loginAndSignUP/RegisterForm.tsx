@@ -80,10 +80,10 @@ export default function RegisterForm() {
   });
   const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
     if ("preventDefault" in data) return;
-    const { confirm_password, refer_code, ...rest } = data;
+    const { confirm_password, referCode, ...rest } = data;
     const finalData = {
       ...rest,
-      ...(refer_code ? { refer_code } : {}),
+      ...(referCode ? { referCode } : {}),
     };
 
     mutate(finalData);
@@ -97,7 +97,7 @@ export default function RegisterForm() {
     mobile: "",
     password: "",
     confirm_password: "",
-    refer_code: referCode || "",
+    referCode: referCode || "",
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
@@ -194,7 +194,7 @@ export default function RegisterForm() {
 
                 <div className="relative">
                   <TextField
-                    name="refer_code"
+                    name="referCode"
                     label="Refer Code"
                     placeholder="refer code"
                     type="text"
