@@ -97,7 +97,7 @@ export default function RegisterForm() {
     mobile: "",
     password: "",
     confirm_password: "",
-    refer_code: "",
+    refer_code: referCode || "",
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
