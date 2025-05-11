@@ -4,20 +4,20 @@ interface THeadProps {
   item: string;
   className?: string;
 }
-
 const THead = ({ item, className }: THeadProps) => (
-  <th className={cn("px-4 py-2 text-start", className)}>{item}</th>
+  <th className={cn("px-4 py-2 text-start whitespace-nowrap", className)}>
+    {item}
+  </th>
 );
 
 interface TDataProps {
   children: React.ReactNode;
   className?: string;
 }
-
 export const TData = ({ children, className }: TDataProps) => (
   <td
     className={cn(
-      "px-4 py-2 text-start text-[14px] border-b border-[#ABADB5] font-light text-[#121213]",
+      "px-4 py-2 text-start text-[14px] border-b border-[#ABADB5] font-light text-[#121213] whitespace-nowrap",
       className
     )}
   >
@@ -39,14 +39,14 @@ const UseTable = ({
   theadClass,
 }: PaymentLogProps) => {
   return (
-    <div>
+    <div className="w-full overflow-x-auto">
       <table
         className={cn(
-          "min-w-full text-white border-gray-200 text-sm",
+          "min-w-full whitespace-nowrap border-gray-200 text-sm",
           className
         )}
       >
-        <thead className="">
+        <thead>
           <tr>
             {headers.map((header, idx) => (
               <THead

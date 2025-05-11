@@ -35,7 +35,7 @@ const MyReferralComponents = () => {
   return (
     <div className="bg-white ">
       <div className="p-4">
-        <DashboardTitle title="My Team" />
+        <DashboardTitle title="My Referral" />
         <div className="mt-8">
           <Form<searchField>
             onSubmit={formSubmit}

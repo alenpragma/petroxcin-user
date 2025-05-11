@@ -92,7 +92,7 @@ const WithdrawComponents = () => {
             </div>
             <SubmitButton
               width="full"
-              label="Submit"
+              label="Withdraw"
               isLoading={isPending}
               loadingLabel="Processing.."
             />{" "}

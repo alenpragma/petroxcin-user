@@ -46,7 +46,6 @@ const TransferComponents = () => {
     },
     onError(err: any) {
       showErrorModal("Error", err?.message?.receiver);
-
     },
   });
   const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
@@ -85,11 +84,6 @@ const TransferComponents = () => {
             isLoading={isPending}
             loadingLabel="Processing.."
           />{" "}
-          <ResetButton
-            onReset={() => formRef.current?.reset()}
-            resetLabel="Cancel"
-            className="bg-[#FA0000] w-full mt-3 hover:bg-[#FA0000]"
-          />
         </GenericForm>
       </div>
     </div>

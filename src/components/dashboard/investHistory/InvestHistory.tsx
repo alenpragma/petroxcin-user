@@ -1,23 +1,14 @@
 "use client";
 import { useState } from "react";
-import Skeleton from "react-loading-skeleton";
 import DashboardTitle from "@/src/components/shared/Title/DashboardTitle";
 import UseTable, { TData } from "@/src/components/shared/table/UseTable";
 import { DateFormate } from "@/src/components/shared/DateFormate/DateFormate";
-import { cn } from "@/src/lib/utils";
 import { useGetData } from "@/src/utils/fetch/axiosConfig/FetchData";
 import { IInvestHistory } from "@/src/types/dashboard/investHistory/investHostory";
 import Pagination from "@/src/components/pagination/Pagination";
 import Status from "@/src/components/shared/Status/Status";
+import { SkeletonRow } from "@/src/components/shared/skelton/Skelton";
 
-export const SkeletonRow = () => (
-  <Skeleton
-    count={1}
-    height={30}
-    baseColor="#b3cccc"
-    highlightColor="#ffffff"
-  />
-);
 
 const InvestHistoryComponents = () => {
   const [page, setPage] = useState(1);

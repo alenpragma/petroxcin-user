@@ -7,11 +7,14 @@ const Status = ({ title }: { title: string }) => {
         "w-[120px] py-2 rounded font-medium",
         title === "Running" ||
           (title === "Active" &&
-            "bg-[#D8FFF4] border border-[#7EDAC5] text-[#10665D]"),
+            "text-[#21a439]  w-fit"),
         title === "Pending" ||
           (title === "InActive" &&
-            "bg-[#FFEDC9] border border-[#DDAA47] text-[#FFA800]"),
-        title === "Completed" && " border-[#7EDAC5] text-[#10665D] w-fit"
+            "text-[#FFA800]   w-fit"),
+        title === "Completed" && " border-[#7EDAC5] text-[#21a439] w-fit",
+        title === "paid" && "text-[#21a439] w-fit",
+        title === "Pending" && "text-[#FFA800] w-fit",
+        title === "Expired" && "text-[#f62d2d] w-fit",
       )}
     >
       {title}

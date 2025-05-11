@@ -66,6 +66,7 @@ const AddFundComponent = () => {
       if (data?.data?.status === true) {
         showSuccessModal("Success", "Please payment");
         window.open(data.data.payment_url, "_blank");
+        formRef.current?.reset();
       }
     },
     onError() {
@@ -80,12 +81,11 @@ const AddFundComponent = () => {
       ...rest,
     };
     mutate(finalData);
-    // formRef.current?.reset();
   };
 
   return (
     <>
-      <div className="flex justify-between gap-6">
+      <div className="flex md:flex-row flex-col justify-between gap-6">
         <div className="flex-1">
           <div className="space-y-3">
             <DashboardTitle title="How would you like to pay" />
