@@ -14,6 +14,7 @@ type User = {
   name: string;
   is_active: "0" | "1";
   created_at: string;
+  investment: string;
   team: any[];
 };
 
@@ -52,9 +53,10 @@ const TreeRow = ({
         </div>
       </TData>
       <TData className="py-3 px-4">{user.email}</TData>
+      <TData className="py-3 px-4">${user.investment}</TData>
       <TData className="py-3 px-4">
         {user.is_active === "0" ? (
-          <Status title="InActive" />
+          <Status title="In Active" />
         ) : (
           <Status title="Active" />
         )}
@@ -105,7 +107,7 @@ const RecursiveTable = ({
   );
 };
 
-const headers = ["Username", "Email", "Status", "Joined Date"];
+const headers = ["Username", "Email", "Investment", "Status", "Joined Date"];
 
 export default function MyTeamComponents() {
   const [page, setPage] = useState(1);

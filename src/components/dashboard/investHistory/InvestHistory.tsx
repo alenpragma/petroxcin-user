@@ -56,7 +56,7 @@ const InvestHistoryComponents = () => {
                   {item.status === "1" ? (
                     <Status title="Active" />
                   ) : (
-                    <Status title="InActive" />
+                    <Status title="In Active" />
                   )}
                 </TData>
               </tr>
