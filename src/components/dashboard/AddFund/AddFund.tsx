@@ -28,17 +28,17 @@ const FormSchema = z.object({
 
 const selectOptions = [{ value: "USDT", text: "USDT" }];
 const paymentData = [
-  // {
-  //   id: 1,
-  //   image: PaymentImage.binance,
-  //   name: "Binance",
-  //   title: "Send form your payment gateway.",
-  // },
   {
     id: 1,
     image: PaymentImage.three20pay,
-    name: "320 Pay",
-    title: "Send form your payment gateway.",
+    name: "3TwentyPay",
+    title: "Automated Crypto Payment Gateway",
+  },
+  {
+    id: 2,
+    image: PaymentImage.three20pay,
+    name: "3TwentyPay",
+    title: "Decentralized Web3 Payment Gateway",
   },
 ];
 
