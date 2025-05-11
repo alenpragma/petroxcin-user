@@ -12,8 +12,13 @@ import {
 import { SelectField } from "@/src/components/form copy/fields/SelectField";
 import { TextField } from "@/src/components/form copy/fields/TextField";
 import { SubmitButton } from "@/src/components/form copy/fields/SubmitButton";
-import { ResetButton } from "@/src/components/form copy/fields/ResetButton";
-import { CheckboxField } from "@/src/components/form copy/fields/CheckboxField";
+import { useMutation } from "@tanstack/react-query";
+import axiosInstance from "@/src/utils/fetch/axiosConfig/axiosConfig";
+import {
+  showErrorModal,
+  showSuccessModal,
+} from "@/src/components/shared/toastAlert/ToastSuccess";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   payment: z.enum(["USDT"]),
@@ -23,14 +28,14 @@ const FormSchema = z.object({
 
 const selectOptions = [{ value: "USDT", text: "USDT" }];
 const paymentData = [
+  // {
+  //   id: 1,
+  //   image: PaymentImage.binance,
+  //   name: "Binance",
+  //   title: "Send form your payment gateway.",
+  // },
   {
     id: 1,
-    image: PaymentImage.binance,
-    name: "Binance",
-    title: "Send form your payment gateway.",
-  },
-  {
-    id: 2,
     image: PaymentImage.three20pay,
     name: "320 Pay",
     title: "Send form your payment gateway.",
@@ -38,19 +43,44 @@ const paymentData = [
 ];
 
 type FormType = z.infer<typeof FormSchema>;
+type depositType = Omit<FormType, "payment">;
 
 const initialValues: FormType = {
   payment: "USDT",
   amount: "",
   // tnc: false,
 };
-const AddFund = () => {
-  const [selectedId, setSelectedId] = useState(0);
+const AddFundComponent = () => {
+  const [selectedId, setSelectedId] = useState(1);
   const formRef = useRef<GenericFormRef<FormType>>(null);
+  const router = useRouter();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (
+      data: depositType | React.FormEvent<HTMLFormElement>
+    ) => {
+      const response = await axiosInstance.post(`/deposit`, data);
+      return response;
+    },
+    onSuccess: (data: any) => {
+      if (data?.data?.status === true) {
+        showSuccessModal("Success", "Please payment");
+        window.open(data.data.payment_url, "_blank");
+      }
+    },
+    onError() {
+      showErrorModal("!Opps", "Something went wrong");
+    },
+  });
 
   const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
-    console.log(data);
-    formRef.current?.reset();
+    if ("preventDefault" in data) return;
+    const { payment, ...rest } = data;
+    const finalData = {
+      ...rest,
+    };
+    mutate(finalData);
+    // formRef.current?.reset();
   };
 
   return (
@@ -65,8 +95,8 @@ const AddFund = () => {
                   key={item.id}
                   className={`flex items-center gap-4 p-1 rounded-md border cursor-pointer transition-all ${
                     selectedId === item.id
-                      ? "bg-[#487FFF] text-white border-[#487FFF]"
-                      : "bg-white text-black border-gray-200"
+                      ? " border-[#487FFF]"
+                      : " text-black border-gray-200"
                   }`}
                   onClick={() => setSelectedId(item.id)}
                 >
@@ -78,17 +108,13 @@ const AddFund = () => {
                   <div>
                     <h6
                       className={`text-lg font-semibold ${
-                        selectedId === item.id ? "text-white" : "text-gray-800"
+                        selectedId === item.id ? "" : "text-gray-800"
                       }`}
                     >
                       {item.name}
                     </h6>
                     <p
-                      className={`text-sm ${
-                        selectedId === item.id
-                          ? "text-white/80"
-                          : "text-gray-500"
-                      }`}
+                      className={`text-sm ${selectedId === item.id ? "" : ""}`}
                     >
                       {item.title}
                     </p>
@@ -125,7 +151,12 @@ const AddFund = () => {
 
                 {/* <CheckboxField name="tnc" label="Terms and Conditions" /> */}
               </div>
-              <SubmitButton width="full" label="Submit" />
+              <SubmitButton
+                width="full"
+                label="Deposit"
+                isLoading={isPending}
+                loadingLabel="Processing.."
+              />{" "}
             </GenericForm>
           </div>
         </div>
@@ -134,4 +165,4 @@ const AddFund = () => {
   );
 };
 
-export default AddFund;
+export default AddFundComponent;

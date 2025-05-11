@@ -8,6 +8,7 @@ import { cn } from "@/src/lib/utils";
 import { useGetData } from "@/src/utils/fetch/axiosConfig/FetchData";
 import { IInvestHistory } from "@/src/types/dashboard/investHistory/investHostory";
 import Pagination from "@/src/components/pagination/Pagination";
+import Status from "@/src/components/shared/Status/Status";
 
 export const SkeletonRow = () => (
   <Skeleton
@@ -25,7 +26,7 @@ const InvestHistoryComponents = () => {
   queryParams.append("page", page.toString());
   const { data: investHistory, isLoading } = useGetData(
     ["investHistory", page],
-    `/transactions?keyword=package_purchased&${queryParams.toString()}`
+    `/invest-history?${queryParams.toString()}`
   );
   const currentPage = investHistory?.current_page ?? 1;
   const lastPage = investHistory?.last_page ?? 1;
@@ -33,12 +34,13 @@ const InvestHistoryComponents = () => {
   const headers = [
     "SL",
     "Time",
-    "Transaction Id",
+    "Premium",
     "Amount",
-    "Remark",
-    "Details",
+    "Daily Revenue",
+    "Received Day",
+    "Duration",
+    "Status",
   ];
-
   return (
     <div className="bg-white">
       <div className="p-4">
@@ -54,16 +56,18 @@ const InvestHistoryComponents = () => {
               <tr key={item.id}>
                 <TData>{(currentPage - 1) * 10 + index + 1}</TData>
                 <TData>{DateFormate(item.created_at)}</TData>
-                <TData>{item.transaction_id}</TData>
-                <TData
-                  className={cn(
-                    item.type === "-" ? "text-red-500" : "text-green-500"
+                <TData>{item.package_name}</TData>
+                <TData>${item.investment}</TData>
+                <TData>${item.daily_roi}</TData>
+                <TData>{item.total_receive_day} Days</TData>
+                <TData>{item.duration} Days</TData>
+                <TData>
+                  {item.status === "1" ? (
+                    <Status title="Active" />
+                  ) : (
+                    <Status title="InActive" />
                   )}
-                >
-                  {item.type === "-" ? "(-)" : "(+)"} ${item.amount}
                 </TData>
-                <TData>{item.remark}</TData>
-                <TData>{item.details}</TData>
               </tr>
             ))}
           </UseTable>

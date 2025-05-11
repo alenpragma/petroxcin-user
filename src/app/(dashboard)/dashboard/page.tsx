@@ -1,5 +1,5 @@
 import { DashboardPage } from "@/src/components/ui/dashboard/dashboardHome/dashboard-page";
-import { getData } from "@/src/lib/fetch/getData";
+import { getDataWithValidation } from "@/src/lib/fetch/getDataWithValidation";
 import { Metadata } from "next";
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -10,7 +10,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 const Dashboard = async () => {
-  const { data: profileData } = await getData("profile");
+  const { data: profileData } = await getDataWithValidation("profile");
   return <DashboardPage profileData={profileData}/>;
 };
 export default Dashboard;

@@ -14,6 +14,7 @@ import { useGetData } from "@/src/utils/fetch/axiosConfig/FetchData";
 import { IInvestHistory } from "@/src/types/dashboard/investHistory/investHostory";
 import { SkeletonRow } from "../investHistory/InvestHistory";
 import Pagination from "@/src/components/pagination/Pagination";
+import { ITransactions } from "@/src/types/dashboard/transactionType/transactionType";
 
 const validationSchema = z.object({
   days: z.string().optional(),
@@ -81,7 +82,7 @@ const TransactionComponents = () => {
           Array.from({ length: 5 }).map((_, i) => <SkeletonRow key={i} />)
         ) : (
           <UseTable headers={headers} className="rounded-md">
-            {transaction?.data.map((item: IInvestHistory, index: number) => (
+            {transaction?.data.map((item: ITransactions, index: number) => (
               <tr className="">
                 <TData>{(currentPage - 1) * 10 + index + 1}</TData>
                 <TData>{DateFormate(item.created_at)}</TData>

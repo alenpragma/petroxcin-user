@@ -1,4 +1,4 @@
-import DashboardHome from "@/src/components/dashboard/AddFund/AddFund";
+import AddFundComponent from "@/src/components/dashboard/AddFund/AddFund";
 import { Metadata } from "next";
 export const generateMetadata = async (): Promise<Metadata> => {
   return {
@@ -9,7 +9,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 const WalletPage = () => {
   return (
     <>
-      <DashboardHome />
+      <AddFundComponent />
     </>
   );
 };

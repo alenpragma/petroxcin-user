@@ -20,3 +20,17 @@ export interface ITransaction {
   status: boolean;
   total: number;
 }
+
+
+export interface ITransactions {
+  id: number;
+  transaction_id: string;
+  user_id: number;
+  amount: number;
+  remark: string;
+  type: string;
+  status: string;
+  details: string;
+  created_at: string;
+  updated_at: string;
+}
