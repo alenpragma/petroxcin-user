@@ -34,7 +34,6 @@ const MyReferralComponents = () => {
     "Username",
     "Email",
     "Invest",
-    "Lavel",
     "Status",
   ];
   const formSubmit: SubmitHandler<searchField> = async (data) => {};
@@ -92,11 +91,10 @@ const MyReferralComponents = () => {
 
                   <TData>{item.name}</TData>
                   <TData>{item.email}</TData>
-                  <TData>$200</TData>
-                  <TData>2</TData>
+                  <TData>${item.investment}</TData>
                   <TData>
                     {item.is_active === "0" ? (
-                      <Status title="InActive" />
+                      <Status title="In Active" />
                     ) : (
                       <Status title="Active" />
                     )}
