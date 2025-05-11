@@ -29,7 +29,7 @@ import axiosInstance from "@/src/utils/fetch/axiosConfig/axiosConfig";
 import { CiUser } from "react-icons/ci";
 import { registerFormSchema } from "@/src/schema/loginAndSignUp/loginAndSignUp";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Images } from "@/src/lib/store/image/image";
 import {
@@ -45,8 +45,8 @@ export default function RegisterForm() {
   const handlePass = () => {
     setShowPass(!showPass);
   };
-  // const searchParams = useSearchParams();
-  // const referCode = searchParams.get("refer");
+  const searchParams = useSearchParams();
+  const referCode = searchParams.get("refer");
   const formRef = useRef<GenericFormRef<FormType>>(null);
   type RegisterPayload = Omit<FormType, "confirm_password">;
 
@@ -199,7 +199,7 @@ export default function RegisterForm() {
                     placeholder="refer code"
                     type="text"
                     inputClass="pl-8"
-                    // readOnly={!!referCode}
+                    readOnly={!!referCode}
                   />
                   <IoMdShareAlt className="absolute top-[42px] size-4 text-[#898989] left-1" />
                 </div>
