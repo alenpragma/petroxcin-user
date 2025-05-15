@@ -28,6 +28,7 @@ const initialValues: FormType = {
 };
 
 const PlanListComponents = ({ packageList }: { packageList: IPlan[] }) => {
+  console.log(packageList);
   const formRef = useRef<GenericFormRef<FormType>>(null);
   const [selectedPlan, setSelectedPlan] = React.useState<IPlan>();
   const [open, setOpen] = React.useState(false);
@@ -56,23 +57,29 @@ const PlanListComponents = ({ packageList }: { packageList: IPlan[] }) => {
   const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
     mutate(data);
   };
+
+  const color = ["#FAEDCA", "#FFE1E0", "#FFF5E4"];
   return (
     <div>
       <DashboardTitle title="Package" />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {packageList.map((plan, index) => (
           <Dialog.Root open={open} onOpenChange={setOpen} key={index}>
-            <div className="bg-white mt-5 rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-[1.02] border border-[#CFD0D2]">
+            <div
+              className="bg-white mt-5 rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-[1.02] border border-[#CFD0D2]"
+              style={{ backgroundColor: color[index % color.length] }}
+            >
               <div className="p-3 py-10">
                 <div className="text-center">
                   <h2 className="text-[24px] font-medium">{plan.name}</h2>
                   <p className="text-slate my-4">
-                    ${plan.min_amount} - ${plan.max_amount}
+                    ${Number(plan.min_amount).toLocaleString()} - $
+                    {Number(plan.max_amount).toLocaleString()}
                   </p>
                 </div>
                 <div className="border-t border-gray-200 pt-4" />
                 <div className="pt-4">
-                  <ul className="space-y-2">
+                  <ul className="space-y-1">
                     <li className="text-slate text-[14px] flex justify-between items-center py-3">
                       <p>Capital Back</p>
                       <Image
@@ -82,24 +89,31 @@ const PlanListComponents = ({ packageList }: { packageList: IPlan[] }) => {
                       />
                     </li>
                     <li className="text-slate text-[14px] flex justify-between items-center py-3">
-                      <p>Return Type</p>{" "}
-                      <p className="text-black">{plan.return_type}</p>
+                      <p>Revenue Return</p>{" "}
+                      <p className="text-black capitalize">
+                        {plan.return_type}
+                      </p>
                     </li>
                     <li className="text-slate text-[14px] flex justify-between items-center py-3">
-                      <p>Number of period</p>{" "}
-                      <p className="text-black">{plan.duration} days</p>
+                      <p>Duration</p>{" "}
+                      <p className="text-black">
+                        {plan.duration === "0"
+                          ? "Unlimited"
+                          : `${plan.duration} Days`}{" "}
+                      </p>
                     </li>
                     <li className="text-slate text-[14px] flex justify-between items-center py-3">
-                      <p>Profit ratio</p>{" "}
+                      <p>Profit Ratio</p>{" "}
                       <p className="text-black">{plan.interest_rate}%</p>
                     </li>
                     <li className="text-slate text-[14px] flex justify-between items-center py-3">
-                      <p>Cancel</p>
-                      <Image
+                      <p>Canellation </p>
+                      <p className="text-green-500">Yes</p>
+                      {/* <Image
                         className="size-5"
                         src={CurrectImage.wrong}
                         alt="img"
-                      />
+                      /> */}
                     </li>
                   </ul>
                 </div>

@@ -51,14 +51,20 @@ export default function LoginFormComponent() {
       const response = await axiosInstance.post(`/login`, data);
       return response;
     },
-    onSuccess: (data: any) => {    console.log(data)
+    onSuccess: (data: any) => {
+      console.log(data?.data?.message);
       if (data?.success === true) {
-    
         Cookies.set("yeldoToken", data?.data?.data?.token, { expires: 3 });
         router.push("/dashboard");
         showSuccessModal("Success", data?.data?.message);
-      } else if (data?.success === false) {
-        showErrorModal("!Opps", data?.data?.errors?.email);
+      } else {
+        const mainMessage = data?.data?.message || "Something went wrong";
+        const emailError = data?.data?.errors?.email;
+
+        showErrorModal(
+          "Oops!",
+          emailError ? `${mainMessage}: ${emailError}` : mainMessage
+        );
       }
     },
     onError(err: any) {},
