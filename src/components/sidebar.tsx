@@ -33,7 +33,7 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
   const navItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
     { icon: PlusCircle, label: "Add Fund", href: "/dashboard/add-fund" },
-    { icon: ListChecks, label: "Plan List", href: "/dashboard/plan-list" },
+    { icon: ListChecks, label: "Premium List", href: "/dashboard/premium-list" },
     {
       icon: History,
       label: "Invest History",
