@@ -56,6 +56,11 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
       label: "Support Ticket",
       href: "/dashboard/support-ticket",
     },
+    {
+      icon: LifeBuoy,
+      label: "KYC verification",
+      href: "/dashboard/kyc-verification",
+    },
     { icon: LogOut, label: "Sign Out", href: "/logout" },
   ];
 

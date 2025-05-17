@@ -10,16 +10,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../ui/form";
-import { Input } from "../../ui/input";
+} from "@/src/components/ui/form";
+import { Input } from "@/src/components/ui/input";
 import { cn } from "@/src/lib/utils";
-import { Button } from "../../ui/button";
-import { LoadingSpinner } from "../../ui/loading-spinner";
+import { Button } from "@/src/components/ui/button";
+import { LoadingSpinner } from "@/src/components/ui/loading-spinner";
 
 type TextFieldProps<T extends FieldValues> = {
   name: Path<T>;
   label?: string;
-  type?: "text" | "email" | "number" | "password";
+  type?: "text" | "email" | "number" | "password" | "file";
   placeholder?: string;
   required?: boolean;
   action?: () => void;
@@ -29,6 +29,7 @@ type TextFieldProps<T extends FieldValues> = {
   inputClass?: string;
   disabled?: boolean;
   readOnly?: boolean;
+  onChange?: (value: any) => void;
 };
 
 /**
@@ -66,6 +67,7 @@ export const TextField = <T extends FieldValues>({
   inputClass,
   disabled = false,
   readOnly,
+  onChange,
 }: TextFieldProps<T>) => {
   const { control } = useFormContext<T>();
   return (
@@ -93,6 +95,10 @@ export const TextField = <T extends FieldValues>({
                 id={name}
                 disabled={disabled}
                 readOnly={readOnly}
+                onChange={(e) => {
+                  field.onChange(e);
+                  onChange?.(e);
+                }}
               />
 
               {loading && <LoadingSpinner className="absolute right-4" />}
