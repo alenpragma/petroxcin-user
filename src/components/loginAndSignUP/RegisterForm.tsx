@@ -59,24 +59,19 @@ export default function RegisterForm() {
     },
     onSuccess: (data: any) => {
       Cookies.set("yeldoToken", data?.data?.data?.token, { expires: 3 });
-      router.push("/dashboard");
-      showSuccessModal("Success", data?.data?.message);
+      // router.push("/dashboard");
+      showSuccessModal("Success", "Register successfully, please check your email");
     },
     onError(err: any) {
       console.log('Full error:', err);
-    
       const mobileError = err?.message?.errors?.mobile?.[0];
       const emailField = err?.message?.errors?.email;
       const emailError = Array.isArray(emailField) ? emailField[0] : emailField;
-    
-      console.log('mobileError:', mobileError);
-      console.log('emailError:', emailError);
     
       if (mobileError || emailError) {
         showErrorModal("Oops!", mobileError || emailError);
       }
     }
-    
   });
   const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
     if ("preventDefault" in data) return;

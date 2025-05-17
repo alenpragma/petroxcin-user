@@ -1,9 +1,15 @@
-'use client';
+"use client";
 
-import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
+import { FieldValues, Path, useFormContext } from "react-hook-form";
 import { PhoneInput } from "react-international-phone";
-import 'react-international-phone/style.css';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/src/components/ui/form";
+import "react-international-phone/style.css";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/src/components/ui/form";
 import { cn } from "@/src/lib/utils";
 
 type PhoneNumberFieldProps<T extends FieldValues> = {
@@ -41,16 +47,18 @@ export const PhoneNumberField = <T extends FieldValues>({
           )}
           <FormControl>
             <PhoneInput
-              defaultCountry="us"
+              defaultCountry="bd"
               {...field}
-              value={field.value || ''}
+              value={field.value || ""}
               onChange={(value) => field.onChange(value)}
               inputClassName={cn(
                 "bg-[#F5F5F6] w-full rounded-md px-3 py-2 border border-input text-sm",
                 inputClass
               )}
               disabled={disabled}
-              readOnly={readOnly}
+              inputProps={{
+                readOnly,
+              }}
             />
           </FormControl>
           <FormMessage className="line-clamp-1 text-xs" />
