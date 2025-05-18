@@ -55,7 +55,7 @@ const TreeRow = ({
       <TData className="py-3 px-4">{user.email}</TData>
       <TData className="py-3 px-4">${user.investment}</TData>
       <TData className="py-3 px-4">
-        {user.is_active === "0" ? (
+        {user.is_active !== "0" ? (
           <Status title="In Active" />
         ) : (
           <Status title="Active" />

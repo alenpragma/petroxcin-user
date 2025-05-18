@@ -58,7 +58,7 @@ export default function RegisterForm() {
       return response;
     },
     onSuccess: (data: any) => {
-      Cookies.set("yeldoToken", data?.data?.data?.token, { expires: 3 });
+      // Cookies.set("yeldoToken", data?.data?.data?.token, { expires: 3 });
       // router.push("/dashboard");
       showSuccessModal("Success", "Register successfully, please check your email");
     },
