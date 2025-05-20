@@ -44,7 +44,6 @@ const initialValues: FormType = {
 
 export default function LoginFormComponent() {
   const router = useRouter();
-
   const formRef = useRef<GenericFormRef<FormType>>(null);
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: FormType | React.FormEvent<HTMLFormElement>) => {
@@ -52,7 +51,6 @@ export default function LoginFormComponent() {
       return response;
     },
     onSuccess: (data: any) => {
-      console.log(data?.data?.message);
       if (data?.success === true) {
         Cookies.set("yeldoToken", data?.data?.data?.token, { expires: 3 });
         router.push("/dashboard");

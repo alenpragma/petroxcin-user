@@ -60,7 +60,7 @@ export default function RegisterForm() {
     onSuccess: (data: any) => {
       // Cookies.set("yeldoToken", data?.data?.data?.token, { expires: 3 });
       // router.push("/dashboard");
-      showSuccessModal("Success", "Register successfully, please check your email");
+      showSuccessModal("Success",  data?.data?.message);
     },
     onError(err: any) {
       console.log('Full error:', err);
