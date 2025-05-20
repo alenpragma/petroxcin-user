@@ -1,6 +1,3 @@
-// import { Button } from '@/components/ui/button';
-// import { LoadingSpinner } from '@/components/ui/loading-spinner';
-
 import { X } from "lucide-react";
 import { ReactNode } from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
@@ -70,6 +67,7 @@ export const TextField = <T extends FieldValues>({
   onChange,
 }: TextFieldProps<T>) => {
   const { control } = useFormContext<T>();
+
   return (
     <FormField
       control={control}
@@ -84,22 +82,42 @@ export const TextField = <T extends FieldValues>({
           )}
           <FormControl>
             <div className="relative flex items-center gap-2">
-              <Input
-                {...field}
-                type={type}
-                placeholder={placeholder ?? "Enter a value"}
-                className={cn(
-                  `w-full bg-[#F5F5F6] ${inputClass}`,
-                  action && "pr-12 "
-                )}
-                id={name}
-                disabled={disabled}
-                readOnly={readOnly}
-                onChange={(e) => {
-                  field.onChange(e);
-                  onChange?.(e);
-                }}
-              />
+              {type === "file" ? (
+                <Input
+                  type="file"
+                  id={name}
+                  className={cn(
+                    `w-full bg-[#F5F5F6] ${inputClass}`,
+                    action && "pr-12"
+                  )}
+                  disabled={disabled}
+                  readOnly={readOnly}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    field.onChange(file);
+                    onChange?.(file);
+                  }}
+                  ref={field.ref}
+                  name={field.name}
+                />
+              ) : (
+                <Input
+                  {...field}
+                  type={type}
+                  placeholder={placeholder ?? "Enter a value"}
+                  className={cn(
+                    `w-full bg-[#F5F5F6] ${inputClass}`,
+                    action && "pr-12"
+                  )}
+                  id={name}
+                  disabled={disabled}
+                  readOnly={readOnly}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    onChange?.(e);
+                  }}
+                />
+              )}
 
               {loading && <LoadingSpinner className="absolute right-4" />}
 

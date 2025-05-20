@@ -1,80 +1,3 @@
-// "use client";
-
-// import {
-//   GenericForm,
-//   GenericFormRef,
-// } from "@/src/components/form copy/GenericForm";
-// import { z } from "zod";
-// import { TextField } from "../../form copy/fields/TextField";
-// import { useRef } from "react";
-
-// const FormSchema = z.object({
-//   image1: z.string(),
-//   image2: z.string(),
-// });
-// type FormType = z.infer<typeof FormSchema>;
-
-// const initialValues: FormType = {
-//   image1: "",
-//   image2: "",
-// };
-// const KycComponents = () => {
-//   const formRef = useRef<GenericFormRef<FormType>>(null);
-
-//   const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
-//     console.log(data);
-//   };
-
-//   const handleChange = (e: any) => {
-//     console.log(e);
-//   };
-//   return (
-//     <div className="md:w-1/2 w-full mx-auto">
-//       <div className="text-center">
-//         <h6 className="font-medium text-[20px]">Document Upload</h6>
-//         <p>Upload clear photos of your identification document</p>
-//       </div>
-//       <div className="mt-8">
-//         <p>Document Type : National Id Card / Passport</p>
-//       </div>
-//       <div className="mt-8">
-//         <GenericForm
-//           schema={FormSchema}
-//           initialValues={initialValues}
-//           onSubmit={handleSubmit}
-//           ref={formRef}
-//         >
-//           <div className="relative h-44 border border-[#E5E7EB]">
-//             <div className=" rounded-lg w-full text-center flex justify-center items-center flex-col gap-1 h-full">
-//               <p className="font-medium">Drag and drop or click to upload</p>
-//               <h6>Jpg or Png</h6>
-//               <button className="bg-red-400 px-6 py-2 rounded-md relative cursor-pointer">
-//                 Upload file
-//                 <TextField
-//                   name="image1"
-//                   type="file"
-//                   className=" right-0 top-0 opacity-0 w-full"
-//                   inputClass="py-2 w-full absolute "
-//                   onChange={handleChange}
-//                 />
-//               </button>
-//               <TextField
-//                 name="image1"
-//                 type="file"
-//                 placeholder=""
-//                 className=" right-0 top-0 opacity-0 w-full"
-//                 inputClass="py-[88px] w-full absolute"
-//                 onChange={handleChange}
-//               />
-//             </div>
-//           </div>
-//         </GenericForm>
-//       </div>
-//     </div>
-//   );
-// };
-// export default KycComponents;
-
 "use client";
 
 import {
@@ -85,6 +8,12 @@ import { z } from "zod";
 import { useRef, useState } from "react";
 import { SubmitButton } from "@/src/components/form copy/fields/SubmitButton";
 import { RxExit } from "react-icons/rx";
+import { useMutation } from "@tanstack/react-query";
+import axiosInstance from "@/src/utils/fetch/axiosConfig/axiosConfig";
+import {
+  showErrorModal,
+  showSuccessModal,
+} from "../../shared/toastAlert/ToastSuccess";
 
 const FormSchema = z.object({
   image1: z.instanceof(File).optional(),
@@ -125,9 +54,35 @@ const KycComponents = () => {
       handleFileChange(file, name);
     }
   };
-
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: FormType) => {
+      const formData = new FormData();
+      if (data.image1) formData.append("front_image", data.image1);
+      if (data.image2) formData.append("selfie_image", data.image2);
+      const response = await axiosInstance.post(`/kyc-submit`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response;
+    },
+    onSuccess: (data: any) => {
+      if (data?.success === false) {
+        showErrorModal("Oops!", data?.data?.message);
+      } else {
+        showSuccessModal("Success", data?.data?.message);
+      }
+    },
+    onError(err: any) {
+      console.log(err?.message);
+    },
+  });
   const handleSubmit = (data: FormType) => {
-    console.log(data);
+    if (!preview1 || !preview2) {
+      showErrorModal("!Opps", "Please input valid image");
+    } else {
+      mutate(data);
+    }
   };
 
   const renderDropZone = (
@@ -152,9 +107,9 @@ const KycComponents = () => {
             <RxExit className="size-7 -rotate-90" />
             <p className="font-medium">Drag and drop or click to upload</p>
             <h6>JPG or PNG</h6>
-            <button className="px-5 py-1 border border-[#d8d8d8] rounded-lg">
+            <div className="px-5 py-1 border border-[#d8d8d8] rounded-lg">
               Select File
-            </button>
+            </div>
           </div>
         )}
         <input
@@ -202,7 +157,12 @@ const KycComponents = () => {
           and the document are clearly visible.
         </p>
         <div className="mt-5" />
-        <SubmitButton width="full" label="Submit" loadingLabel="Processing.." />
+        <SubmitButton
+          width="full"
+          label="Submit"
+          isLoading={isPending}
+          loadingLabel="Processing.."
+        />{" "}
       </GenericForm>
     </div>
   );
