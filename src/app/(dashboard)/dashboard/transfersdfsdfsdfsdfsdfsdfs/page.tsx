@@ -1,4 +1,4 @@
-import TransferComponents from "@/src/components/dashboard/transfer/Transfer";
+// import TransferComponents from "@/src/components/dashboard/transfer/Transfer";
 import { Metadata } from "next";
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -10,6 +10,6 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 const TransferPage = async () => {
   
-  return <TransferComponents />;
+  // return <TransferComponents />;
 };
 export default TransferPage;
