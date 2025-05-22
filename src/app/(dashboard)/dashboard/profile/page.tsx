@@ -317,7 +317,7 @@ export default function ProfileClient() {
                   name="address"
                   label="Address"
                   type="text"
-                  placeholder="Khagrachari"
+                  placeholder="Enter your address"
                   inputClass=""
                 />
               </div>
