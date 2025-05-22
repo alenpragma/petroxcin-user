@@ -65,7 +65,9 @@ export default function LoginFormComponent() {
         );
       }
     },
-    onError(err: any) {},
+    onError() {
+      showErrorModal("!Opps", "Something went wrong");
+    },
   });
   const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
     mutate(data);

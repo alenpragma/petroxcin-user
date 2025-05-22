@@ -1,10 +1,10 @@
-import type React from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../components/theme-provider";
 import MainProvider from "../components/Provider/MainProvider";
 
+// Font config
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -15,9 +15,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Metadata including favicon
 export const metadata: Metadata = {
   title: "petroxcin",
   description: "Grow your wealth with smart investments on our secure platform",
+  icons: {
+    icon: [
+      {
+        url: "https://api.petroxcin.com/favicon.ico",
+        type: "image/x-icon",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -27,13 +36,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="https://www.api.petroxcin.com/favicon.ico" />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {" "}
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

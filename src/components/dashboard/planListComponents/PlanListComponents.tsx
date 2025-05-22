@@ -28,7 +28,6 @@ const initialValues: FormType = {
 };
 
 const PlanListComponents = ({ packageList }: { packageList: IPlan[] }) => {
-  console.log(packageList);
   const formRef = useRef<GenericFormRef<FormType>>(null);
   const [selectedPlan, setSelectedPlan] = React.useState<IPlan>();
   const [open, setOpen] = React.useState(false);
@@ -66,7 +65,7 @@ const PlanListComponents = ({ packageList }: { packageList: IPlan[] }) => {
         {packageList.map((plan, index) => (
           <Dialog.Root open={open} onOpenChange={setOpen} key={index}>
             <div
-              className="bg-gradient-to-bl from-[#FFE5FD] to-[#FFFFFF] mt-5 rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-[1.02] border border-[#CFD0D2]"
+              className="bg-gradient-to-bl from-[#ffe5fd46] to-[#FFFFFF] mt-5 rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-[1.02] border border-[#CFD0D2]"
               // style={{ backgroundColor: color[index % color.length] }}
             >
               <div className="p-3 py-10">

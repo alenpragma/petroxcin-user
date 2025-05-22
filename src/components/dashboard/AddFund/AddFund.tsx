@@ -23,24 +23,11 @@ import { useRouter } from "next/navigation";
 const FormSchema = z.object({
   payment: z.enum(["USDT"]),
   amount: z.string().nonempty({ message: "Enter amount" }),
+  network: z.string().optional(),
   // tnc: z.boolean(),
 });
 
 const selectOptions = [{ value: "USDT", text: "USDT" }];
-const paymentData = [
-  {
-    id: 1,
-    image: PaymentImage.three20pay,
-    name: "3TwentyPay",
-    title: "Automated Crypto Payment Gateway",
-  },
-  {
-    id: 2,
-    image: PaymentImage.three20pay,
-    name: "3TwentyPay",
-    title: "Decentralized Web3 Payment Gateway",
-  },
-];
 
 type FormType = z.infer<typeof FormSchema>;
 type depositType = Omit<FormType, "payment">;
@@ -48,12 +35,11 @@ type depositType = Omit<FormType, "payment">;
 const initialValues: FormType = {
   payment: "USDT",
   amount: "",
+  network: "",
   // tnc: false,
 };
 const AddFundComponent = () => {
-  const [selectedId, setSelectedId] = useState(1);
   const formRef = useRef<GenericFormRef<FormType>>(null);
-  const router = useRouter();
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (
@@ -76,7 +62,7 @@ const AddFundComponent = () => {
 
   const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
     if ("preventDefault" in data) return;
-    const { payment, ...rest } = data;
+    const { payment, network, ...rest } = data;
     const finalData = {
       ...rest,
     };
@@ -85,45 +71,7 @@ const AddFundComponent = () => {
 
   return (
     <>
-      <div className="flex md:flex-row flex-col justify-between gap-6">
-        <div className="flex-1">
-          <div className="space-y-3">
-            <DashboardTitle title="How would you like to pay" />
-            <div className="flex flex-col gap-3">
-              {paymentData.map((item) => (
-                <div
-                  key={item.id}
-                  className={`flex items-center gap-4 p-1 rounded-md border cursor-pointer transition-all ${
-                    selectedId === item.id
-                      ? " border-[#487FFF]"
-                      : " text-black border-gray-200"
-                  }`}
-                  onClick={() => setSelectedId(item.id)}
-                >
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    className="size-12 rounded-md"
-                  />
-                  <div>
-                    <h6
-                      className={`text-lg font-semibold ${
-                        selectedId === item.id ? "" : "text-gray-800"
-                      }`}
-                    >
-                      {item.name}
-                    </h6>
-                    <p
-                      className={`text-sm ${selectedId === item.id ? "" : ""}`}
-                    >
-                      {item.title}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+      <div className="md:w-3/6 w-full mx-auto">
         <div className="flex-1">
           <div className="">
             <DashboardTitle title="Payment Info" />
@@ -141,12 +89,18 @@ const AddFundComponent = () => {
                   options={selectOptions}
                   label="Payment"
                 />
-
                 <TextField
                   name="amount"
                   label="Amount"
                   type="number"
                   placeholder="0.00"
+                />
+                <TextField
+                  name="network"
+                  label="Network"
+                  type="text"
+                  placeholder="BEP-20"
+                  readOnly
                 />
 
                 {/* <CheckboxField name="tnc" label="Terms and Conditions" /> */}

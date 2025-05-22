@@ -7,7 +7,6 @@ export const MetricCards = ({
 }: {
   profileData: IUserProfileResponse;
 }) => {
-  console.log(profileData)
   const metrics = [
     {
       first: "EAF1FF",

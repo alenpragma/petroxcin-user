@@ -1,10 +1,39 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/src/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/src/components/ui/select"
-import { CircleDollarSign, Users } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/src/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/src/components/ui/select";
+import { IUserProfileResponse } from "@/src/types/dashboard/dashboardType/dashboardType";
+import { CircleDollarSign, Users } from "lucide-react";
 
-export function EarningStatistic() {
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-  const data = [45, 30, 38, 42, 32, 40, 48, 42]
+export function EarningStatistic({
+  profileData,
+}: {
+  profileData: IUserProfileResponse;
+}) {
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const data = [45, 30, 38, 42, 32, 40, 48, 42];
 
   return (
     <Card>
@@ -32,7 +61,13 @@ export function EarningStatistic() {
             </div>
             <div>
               <div className="text-xs text-gray-500">Daily Bonus</div>
-              <div className="font-bold">$534543</div>
+              <div className="font-bold">
+                $
+                {Number(profileData.profit_wallet).toLocaleString(undefined, {
+                  minimumFractionDigits: 3,
+                  maximumFractionDigits: 3,
+                })}
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-md">
@@ -41,15 +76,21 @@ export function EarningStatistic() {
             </div>
             <div>
               <div className="text-xs text-gray-500">Refer Bonus</div>
-              <div className="font-bold">$534543</div>
+              <div className="font-bold">${profileData.totalEarning}</div>
             </div>
           </div>
         </div>
         <div className="h-64 relative">
           <div className="absolute inset-0 flex items-end justify-between">
             {data.map((value, index) => (
-              <div key={index} className="flex flex-col items-center gap-2 w-1/8">
-                <div className="bg-blue-600 w-10 rounded-sm" style={{ height: `${value * 2}px` }}></div>
+              <div
+                key={index}
+                className="flex flex-col items-center gap-2 w-1/8"
+              >
+                <div
+                  className="bg-blue-600 w-10 rounded-sm"
+                  style={{ height: `${value * 2}px` }}
+                ></div>
                 <div className="text-xs text-gray-500">{months[index]}</div>
               </div>
             ))}
@@ -62,5 +103,5 @@ export function EarningStatistic() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

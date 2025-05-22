@@ -7,7 +7,6 @@ export async function getDataWithValidation(endpoint: string) {
     const token = cookieStore.get("yeldoToken")?.value;
 
     const url = `https://api.petroxcin.com/api/user/${endpoint}`;
-    console.log(`Fetching from: ${url}`);
 
     const res = await fetch(url, {
       next: {
