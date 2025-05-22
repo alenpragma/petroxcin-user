@@ -12,6 +12,7 @@ export interface IUserProfileResponse {
     is_block: number;
     created_at: string;
     updated_at: string;
+    kyc_status: string;
   };
   teamInvest: number;
   directRefer: number;

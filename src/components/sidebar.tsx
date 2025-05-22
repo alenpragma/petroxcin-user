@@ -53,11 +53,6 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
     },
     {
       icon: LifeBuoy,
-      label: "Support Ticket",
-      href: "/dashboard/support-ticket",
-    },
-    {
-      icon: LifeBuoy,
       label: "KYC verification",
       href: "/dashboard/kyc-verification",
     },

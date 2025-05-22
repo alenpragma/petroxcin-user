@@ -27,6 +27,7 @@ type TextFieldProps<T extends FieldValues> = {
   disabled?: boolean;
   readOnly?: boolean;
   onChange?: (value: any) => void;
+  labelClass?: string;
 };
 
 /**
@@ -65,6 +66,7 @@ export const TextField = <T extends FieldValues>({
   disabled = false,
   readOnly,
   onChange,
+  labelClass,
 }: TextFieldProps<T>) => {
   const { control } = useFormContext<T>();
 
@@ -76,7 +78,7 @@ export const TextField = <T extends FieldValues>({
         <FormItem className={cn(className)}>
           {label && (
             <FormLabel htmlFor={name}>
-              <span>{label}</span>
+              <span className={cn(labelClass)}>{label}</span>
               {required && <span className="ml-1 text-red-500">*</span>}
             </FormLabel>
           )}

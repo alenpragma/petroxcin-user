@@ -25,14 +25,14 @@ export function QuickActions() {
       icon: <CircleDollarSign className="size-10 text-blue-600" />,
       bgColor: "bg-blue-50",
       textColor: "text-blue-600",
-      link: "/dashboard/plan-list",
+      link: "/dashboard/premium-list",
     },
     {
-      title: "Transfer",
+      title: "Convert",
       icon: <ArrowLeftRight className="size-10 text-blue-600" />,
       bgColor: "bg-blue-50",
       textColor: "text-blue-600",
-      link: "/dashboard/transfer",
+      link: "/dashboard/convert",
     },
     {
       title: "Withdraw",

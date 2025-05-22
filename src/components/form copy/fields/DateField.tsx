@@ -1,6 +1,6 @@
 import { FieldValues, Path, useFormContext } from 'react-hook-form';
 
-import { DateTimePicker } from '@/components/ui/date-time-picker';
+import { DateTimePicker } from '@/src/components/ui/date-time-picker';
 import { FormField, FormItem, FormLabel, FormMessage } from '../../ui/form';
 
 interface Props<T extends FieldValues> {
