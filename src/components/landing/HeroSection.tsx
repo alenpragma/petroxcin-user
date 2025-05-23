@@ -1,5 +1,6 @@
 import { Button } from "@/src/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -14,19 +15,23 @@ const HeroSection = () => {
           gas industry. Professional portfolio management with proven returns.
         </p>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-          <Button
-            size="lg"
-            className="bg-[#C49B3E] hover:bg-[#B38A2D] text-white"
-          >
-            Start Investing <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="border-white text-white bg-white/10"
-          >
-            View Investment Plans
-          </Button>
+          <Link href="/dashboard">
+            <Button
+              size="lg"
+              className="bg-[#C49B3E] hover:bg-[#B38A2D] text-white"
+            >
+              Start Investing <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
+          <Link href="/dashboard">
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white bg-white/10"
+            >
+              View Investment Plans
+            </Button>
+          </Link>
         </div>
       </div>
 

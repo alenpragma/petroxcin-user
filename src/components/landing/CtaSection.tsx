@@ -1,4 +1,5 @@
 import { Button } from "@/src/components/ui/button";
+import Link from "next/link";
 
 const CtaSection = () => {
   return (
@@ -14,19 +15,23 @@ const CtaSection = () => {
             future with our strategic oil and gas investment plans.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-            <Button
-              size="lg"
-              className="bg-[#C49B3E] hover:bg-[#B38A2D] text-white"
-            >
-              Create Your Account
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white/10"
-            >
-              Schedule a Consultation
-            </Button>
+            <Link href="/dashboard">
+              <Button
+                size="lg"
+                className="bg-[#C49B3E] hover:bg-[#B38A2D] text-white"
+              >
+                Create Your Account
+              </Button>
+            </Link>
+            <Link href="/dashboard">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-white text-black"
+              >
+                Schedule a Consultation
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
