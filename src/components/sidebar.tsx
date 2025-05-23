@@ -18,7 +18,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Images } from "@/src/lib/store/image/image";
 
 interface SidebarProps {
@@ -29,17 +29,23 @@ interface SidebarProps {
 export function Sidebar({ open, setOpen }: SidebarProps) {
   const pathname = usePathname();
   const [referralOpen, setReferralOpen] = useState(false);
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   const navItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
     { icon: PlusCircle, label: "Add Fund", href: "/dashboard/add-fund" },
-    { icon: ListChecks, label: "Premium List", href: "/dashboard/premium-list" },
+    {
+      icon: ListChecks,
+      label: "Premium List",
+      href: "/dashboard/premium-list",
+    },
     {
       icon: History,
       label: "Invest History",
       href: "/dashboard/invest-history",
     },
-    // { icon: ArrowLeftRight, label: "Transfer", href: "/dashboard/transfer" },
     { icon: ArrowDownToLine, label: "Withdraw", href: "/dashboard/withdraw" },
     { icon: RefreshCw, label: "Convert", href: "/dashboard/convert" },
     { icon: BarChart2, label: "Transaction", href: "/dashboard/transaction" },
