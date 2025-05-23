@@ -28,6 +28,7 @@ import Image from "next/image";
 import { Images } from "@/src/lib/store/image/image";
 import {
   showErrorModal,
+  showMailModal,
   showSuccessModal,
 } from "@/src/components/shared/toastAlert/ToastSuccess";
 
@@ -59,7 +60,7 @@ export default function LoginFormComponent() {
         const mainMessage = data?.data?.message || "Something went wrong";
         const emailError = data?.data?.errors?.email;
 
-        showErrorModal(
+        showMailModal(
           "Oops!",
           emailError ? `${mainMessage}: ${emailError}` : mainMessage
         );

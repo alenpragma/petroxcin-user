@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
-import { useState } from "react";
-import Link from "next/link";
+import React, { useState } from "react";
 import { Flame, Menu } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
 import {
   NavigationMenu,
@@ -27,6 +26,7 @@ export function Navbar({ token }: { token: string | undefined }) {
       setIsScrolled(window.scrollY > 10);
     });
   }
+
   return (
     <header
       className={cn(
@@ -36,28 +36,27 @@ export function Navbar({ token }: { token: string | undefined }) {
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center">
-          <Link href="/" className="flex items-center">
-            <Image className="w-44" src={Images.logo} alt="img" />
-          </Link>
+          {/* <Link href="/" className="flex items-center"> */}
+          <Image className="w-44" src={Images.logo} alt="img" />
+          {/* </Link> */}
         </div>
 
-        {/* Desktop Navigation */}
         <div className="hidden lg:block">
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <Link href="/" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Home
-                  </NavigationMenuLink>
-                </Link>
+                {/* <Link href="/" legacyBehavior passHref> */}
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Home
+                </NavigationMenuLink>
+                {/* </Link> */}
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/about" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    About Us
-                  </NavigationMenuLink>
-                </Link>
+                {/* <Link href="/about" legacyBehavior passHref> */}
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  About Us
+                </NavigationMenuLink>
+                {/* </Link> */}
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Investment Plans</NavigationMenuTrigger>
@@ -65,10 +64,8 @@ export function Navbar({ token }: { token: string | undefined }) {
                   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     <li className="row-span-3">
                       <NavigationMenuLink asChild>
-                        <a
-                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-[#0A1F44] to-[#0A1F44]/90 p-6 no-underline outline-none focus:shadow-md"
-                          href="/"
-                        >
+                        {/* <a href="/"> */}
+                        <div className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-[#0A1F44] to-[#0A1F44]/90 p-6 no-underline outline-none focus:shadow-md">
                           <Flame className="h-6 w-6 text-[#C49B3E]" />
                           <div className="mb-2 mt-4 text-lg font-medium text-white">
                             Premium Energy Portfolio
@@ -77,7 +74,8 @@ export function Navbar({ token }: { token: string | undefined }) {
                             Our flagship investment plan with diversified
                             exposure to the entire energy sector.
                           </p>
-                        </a>
+                        </div>
+                        {/* </a> */}
                       </NavigationMenuLink>
                     </li>
                     <ListItem href="/plans/oil-bonds" title="Oil Bonds">
@@ -93,38 +91,37 @@ export function Navbar({ token }: { token: string | undefined }) {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/insights" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Market Insights
-                  </NavigationMenuLink>
-                </Link>
+                {/* <Link href="/insights" legacyBehavior passHref> */}
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Market Insights
+                </NavigationMenuLink>
+                {/* </Link> */}
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/projects" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Projects
-                  </NavigationMenuLink>
-                </Link>
+                {/* <Link href="/projects" legacyBehavior passHref> */}
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Projects
+                </NavigationMenuLink>
+                {/* </Link> */}
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/resources" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Resources
-                  </NavigationMenuLink>
-                </Link>
+                {/* <Link href="/resources" legacyBehavior passHref> */}
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Resources
+                </NavigationMenuLink>
+                {/* </Link> */}
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/contact" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                    Contact
-                  </NavigationMenuLink>
-                </Link>
+                {/* <Link href="/contact" legacyBehavior passHref> */}
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Contact
+                </NavigationMenuLink>
+                {/* </Link> */}
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
 
-        {/* Login/Signup Buttons */}
         {!token ? (
           <div className="hidden items-center space-x-4 lg:flex">
             <Link href="/login">
@@ -136,7 +133,6 @@ export function Navbar({ token }: { token: string | undefined }) {
               </Button>
             </Link>
             <Link href="/register">
-              {" "}
               <Button className="bg-[#C49B3E] text-white hover:bg-[#B38A2D]">
                 Get Start
               </Button>
@@ -144,7 +140,6 @@ export function Navbar({ token }: { token: string | undefined }) {
           </div>
         ) : (
           <Link href="/dashboard">
-            {" "}
             <Button className="bg-[#C49B3E] text-white hover:bg-[#B38A2D]">
               Dashboard
             </Button>
@@ -162,62 +157,42 @@ export function Navbar({ token }: { token: string | undefined }) {
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <div className="flex flex-col gap-6 py-6">
-                <Link href="/" className="flex items-center">
-                  <Flame className="h-8 w-8 text-[#C49B3E]" />
-                  <span className="ml-2 font-serif text-xl font-bold text-[#0A1F44]">
-                    EnergyInvest
-                  </span>
-                </Link>
+                {/* <Link href="/" className="flex items-center"> */}
+                <Image
+                  className="w-32"
+                  src={Images.logo}
+                  alt="img"
+                  width={500}
+                  height={500}
+                />
+                {/* </Link> */}
                 <nav className="flex flex-col space-y-4">
-                  <Link
-                    href="/"
-                    className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    href="/about"
-                    className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"
-                  >
-                    About Us
-                  </Link>
-                  <Link
-                    href="/plans"
-                    className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"
-                  >
-                    Investment Plans
-                  </Link>
-                  <Link
-                    href="/insights"
-                    className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"
-                  >
-                    Market Insights
-                  </Link>
-                  <Link
-                    href="/projects"
-                    className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"
-                  >
-                    Projects
-                  </Link>
-                  <Link
-                    href="/resources"
-                    className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"
-                  >
-                    Resources
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"
-                  >
-                    Contact
-                  </Link>
+                  {/* <Link href="/" className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"> */}
+                  Home
+                  {/* </Link> */}
+                  {/* <Link href="/about" className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"> */}
+                  About Us
+                  {/* </Link> */}
+                  {/* <Link href="/plans" className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"> */}
+                  Investment Plans
+                  {/* </Link> */}
+                  {/* <Link href="/insights" className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"> */}
+                  Market Insights
+                  {/* </Link> */}
+                  {/* <Link href="/projects" className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"> */}
+                  Projects
+                  {/* </Link> */}
+                  {/* <Link href="/resources" className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"> */}
+                  Resources
+                  {/* </Link> */}
+                  {/* <Link href="/contact" className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"> */}
+                  Contact
+                  {/* </Link> */}
                 </nav>
                 <div className="flex flex-col space-y-4">
                   {!token ? (
                     <>
-                      {" "}
                       <Link href="/login">
-                        {" "}
                         <Button
                           variant="outline"
                           className="w-full border-[#0A1F44] text-[#0A1F44]"
