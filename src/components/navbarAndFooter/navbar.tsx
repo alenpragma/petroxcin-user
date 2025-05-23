@@ -143,6 +143,7 @@ export function Navbar({ token }: { token: string | undefined }) {
             <Button className="bg-[#C49B3E] text-white hover:bg-[#B38A2D]">
               Dashboard
             </Button>
+            //{" "}
           </Link>
         )}
 
@@ -165,29 +166,29 @@ export function Navbar({ token }: { token: string | undefined }) {
                   width={500}
                   height={500}
                 />
-                {/* </Link> */}
+                {/* </Link>  */}
                 <nav className="flex flex-col space-y-4">
-                  {/* <Link href="/" className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"> */}
-                  Home
-                  {/* </Link> */}
-                  {/* <Link href="/about" className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"> */}
-                  About Us
-                  {/* </Link> */}
-                  {/* <Link href="/plans" className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"> */}
-                  Investment Plans
-                  {/* </Link> */}
-                  {/* <Link href="/insights" className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"> */}
-                  Market Insights
-                  {/* </Link> */}
-                  {/* <Link href="/projects" className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"> */}
-                  Projects
-                  {/* </Link> */}
-                  {/* <Link href="/resources" className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"> */}
-                  Resources
-                  {/* </Link> */}
-                  {/* <Link href="/contact" className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E]"> */}
-                  Contact
-                  {/* </Link> */}
+                  <li className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E] list-none">
+                    Home
+                  </li>
+                  <li className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E] list-none">
+                    About Us
+                  </li>
+                  <li className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E] list-none">
+                    Investment Plans
+                  </li>
+                  <li className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E] list-none">
+                    Market Insights
+                  </li>
+                  <li className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E] list-none">
+                    Projects
+                  </li>
+                  <li className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E] list-none">
+                    Resources
+                  </li>
+                  <li className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E] list-none">
+                    Contact
+                  </li>
                 </nav>
                 <div className="flex flex-col space-y-4">
                   {!token ? (

@@ -1,4 +1,4 @@
-import { ArrowRight, BarChart3, Flame, TrendingUp } from "lucide-react";
+import { ArrowRight, DollarSign, TrendingUp, Rocket } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/src/components/ui/button";
@@ -25,41 +25,29 @@ export function InvestmentPlans() {
         </div>
 
         <div className="grid gap-8 md:grid-cols-3">
-          {/* Plan 1 */}
+          {/* Starter Plan */}
           <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
             <CardHeader className="text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#0A1F44]/10">
-                <Flame className="h-8 w-8 text-[#0A1F44]" />
+                <DollarSign className="h-8 w-8 text-[#0A1F44]" />
               </div>
               <CardTitle className="font-serif text-2xl text-[#0A1F44]">
-                Oil Bonds
+                Starter Plan
               </CardTitle>
-              <CardDescription>Stable fixed income returns</CardDescription>
+              <CardDescription>Ideal for new investors</CardDescription>
             </CardHeader>
             <CardContent className="text-center">
               <div className="mb-4">
                 <span className="font-serif text-4xl font-bold text-[#0A1F44]">
-                  8-12%
+                  0.70%
                 </span>
-                <span className="text-gray-500"> / annual return</span>
+                <span className="text-gray-500"> / daily profit</span>
               </div>
               <ul className="mb-6 space-y-2 text-left text-sm text-gray-600">
-                <li className="flex items-start">
-                  <span className="mr-2 text-[#C49B3E]">✓</span> Backed by
-                  physical oil assets
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2 text-[#C49B3E]">✓</span> Quarterly
-                  dividend payments
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2 text-[#C49B3E]">✓</span> Low volatility
-                  investment
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2 text-[#C49B3E]">✓</span> Minimum
-                  investment: $10,000
-                </li>
+                <li>✔️ Low entry threshold</li>
+                <li>✔️ Daily profit accrual</li>
+                <li>✔️ Start with just $50</li>
+                <li>✔️ Investment Range: $50 – $199</li>
               </ul>
             </CardContent>
             <Link href="/dashboard/premium-list">
@@ -71,41 +59,29 @@ export function InvestmentPlans() {
             </Link>
           </Card>
 
-          {/* Plan 2 */}
+          {/* Growth Spark Plan */}
           <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
             <CardHeader className="text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#C49B3E]/10">
                 <TrendingUp className="h-8 w-8 text-[#C49B3E]" />
               </div>
               <CardTitle className="font-serif text-2xl text-[#0A1F44]">
-                Energy Stocks
+                Growth Spark Plan
               </CardTitle>
-              <CardDescription>Growth-focused equity portfolio</CardDescription>
+              <CardDescription>Steady portfolio growth</CardDescription>
             </CardHeader>
             <CardContent className="text-center">
               <div className="mb-4">
                 <span className="font-serif text-4xl font-bold text-[#0A1F44]">
-                  15-25%
+                  0.80%
                 </span>
-                <span className="text-gray-500"> / annual return</span>
+                <span className="text-gray-500"> / daily profit</span>
               </div>
               <ul className="mb-6 space-y-2 text-left text-sm text-gray-600">
-                <li className="flex items-start">
-                  <span className="mr-2 text-[#C49B3E]">✓</span> Curated
-                  portfolio of energy stocks
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2 text-[#C49B3E]">✓</span> Active
-                  management by experts
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2 text-[#C49B3E]">✓</span> Higher growth
-                  potential
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2 text-[#C49B3E]">✓</span> Minimum
-                  investment: $25,000
-                </li>
+                <li>✔️ Enhanced daily returns</li>
+                <li>✔️ Suitable for growth</li>
+                <li>✔️ Flexible withdrawal options</li>
+                <li>✔️ Investment Range: $200 – $499</li>
               </ul>
             </CardContent>
             <Link href="/dashboard/premium-list">
@@ -117,41 +93,29 @@ export function InvestmentPlans() {
             </Link>
           </Card>
 
-          {/* Plan 3 */}
+          {/* Accelerator Plan */}
           <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
             <CardHeader className="text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#333333]/10">
-                <BarChart3 className="h-8 w-8 text-[#333333]" />
+                <Rocket className="h-8 w-8 text-[#333333]" />
               </div>
               <CardTitle className="font-serif text-2xl text-[#0A1F44]">
-                Diversified Energy
+                Accelerator Plan
               </CardTitle>
-              <CardDescription>Balanced risk-return profile</CardDescription>
+              <CardDescription>Maximize daily ROI</CardDescription>
             </CardHeader>
             <CardContent className="text-center">
               <div className="mb-4">
                 <span className="font-serif text-4xl font-bold text-[#0A1F44]">
-                  10-18%
+                  1.00%
                 </span>
-                <span className="text-gray-500"> / annual return</span>
+                <span className="text-gray-500"> / daily profit</span>
               </div>
               <ul className="mb-6 space-y-2 text-left text-sm text-gray-600">
-                <li className="flex items-start">
-                  <span className="mr-2 text-[#C49B3E]">✓</span> Mix of bonds,
-                  stocks, and assets
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2 text-[#C49B3E]">✓</span> Balanced risk
-                  exposure
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2 text-[#C49B3E]">✓</span> Quarterly
-                  rebalancing
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-2 text-[#C49B3E]">✓</span> Minimum
-                  investment: $50,000
-                </li>
+                <li>✔️ Balanced for growth and risk</li>
+                <li>✔️ Ideal for serious investors</li>
+                <li>✔️ Minimum Investment: $500</li>
+                <li>✔️ Investment Range: $500 – $999</li>
               </ul>
             </CardContent>
             <Link href="/dashboard/premium-list">

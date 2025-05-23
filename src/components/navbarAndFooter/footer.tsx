@@ -152,31 +152,10 @@ export function Footer() {
         </div>
 
         <div className="mt-12 border-t border-white/10 pt-8">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+          <div className="text-center">
             <p className="text-sm text-gray-300">
-              &copy; {new Date().getFullYear()} EnergyInvest. All rights
-              reserved.
+              &copy; {new Date().getFullYear()} Petroxcin. All rights reserved.
             </p>
-            <div className="flex space-x-6 text-sm">
-              <Link
-                href="/terms"
-                className="text-gray-300 hover:text-[#C49B3E]"
-              >
-                Terms of Service
-              </Link>
-              <Link
-                href="/privacy"
-                className="text-gray-300 hover:text-[#C49B3E]"
-              >
-                Privacy Policy
-              </Link>
-              <Link
-                href="/disclaimer"
-                className="text-gray-300 hover:text-[#C49B3E]"
-              >
-                Investment Disclaimer
-              </Link>
-            </div>
           </div>
         </div>
       </div>
