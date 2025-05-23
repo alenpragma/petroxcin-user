@@ -34,3 +34,20 @@ export const showErrorModal = (title: string, descrip: string) => {
     timerProgressBar: false,
   });
 };
+export const showMailModal = (title: string, descrip: string) => {
+  Swal.fire({
+    html: `
+      <div class="my-custom-modal flex flex-col items-center justify-start gap-4">
+        <img class="w-10 h-10" src="https://e7.pngegg.com/pngimages/105/439/png-clipart-white-and-blue-message-icon-illustration-email-computer-icons-symbol-message-inbox-by-gmail-envelope-miscellaneous-blue-thumbnail.png" alt="img" />
+        <p class="custom-text text-[20px] font-semibold">${title}</p>
+        <p>${descrip}</p>
+      </div>
+    `,
+    showConfirmButton: false,
+    customClass: {
+      popup: "w-fit px-14",
+    },
+    timer: 3000,
+    timerProgressBar: false,
+  });
+};

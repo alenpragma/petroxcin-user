@@ -52,3 +52,14 @@ export const Images = {
   logo,
 };
 // ------------------  logo image
+
+// ------------------  landing page image
+import image1 from "@/src/assets/images/blog/image-01.jpg";
+import image2 from "@/src/assets/images/blog/image-02.jpg";
+import image3 from "@/src/assets/images/blog/image-03.jpg";
+export const landingImage = {
+  image1,
+  image2,
+  image3,
+};
+// ------------------  landing page image

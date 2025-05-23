@@ -1,8 +1,20 @@
-import Link from "next/link"
-import { Facebook, Flame, Instagram, Linkedin, Mail, MapPin, Phone, Twitter } from "lucide-react"
+import Link from "next/link";
+import {
+  Facebook,
+  Flame,
+  Instagram,
+  Linkedin,
+  Mail,
+  MapPin,
+  Phone,
+  Twitter,
+} from "lucide-react";
+import { FaTelegramPlane } from "react-icons/fa";
 
-import { Button } from "@/src/components/ui/button"
-import { Input } from "@/src/components/ui/input"
+import { Button } from "@/src/components/ui/button";
+import { Input } from "@/src/components/ui/input";
+import Image from "next/image";
+import { Images } from "@/src/lib/store/image/image";
 
 export function Footer() {
   return (
@@ -12,12 +24,18 @@ export function Footer() {
           {/* Company Info */}
           <div>
             <Link href="/" className="mb-4 flex items-center">
-              <Flame className="h-8 w-8 text-[#C49B3E]" />
-              <span className="ml-2 font-serif text-xl font-bold">EnergyInvest</span>
+              <Image
+                className="w-32"
+                src={Images.logo}
+                alt="img"
+                width={500}
+                height={500}
+              />
             </Link>
             <p className="mb-4 text-sm text-gray-300">
-              Secure your financial future with strategic investments in the energy sector. Professional portfolio
-              management with proven returns.
+              Secure your financial future with strategic investments in the
+              energy sector. Professional portfolio management with proven
+              returns.
             </p>
             <div className="flex space-x-4">
               <Link href="#" className="text-gray-300 hover:text-[#C49B3E]">
@@ -44,34 +62,34 @@ export function Footer() {
             <h3 className="mb-4 font-serif text-lg font-bold">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/about" className="text-gray-300 hover:text-[#C49B3E]">
+                <span className="text-gray-300 hover:text-[#C49B3E] cursor-pointer">
                   About Us
-                </Link>
+                </span>
               </li>
               <li>
-                <Link href="/plans" className="text-gray-300 hover:text-[#C49B3E]">
+                <span className="text-gray-300 hover:text-[#C49B3E] cursor-pointer">
                   Investment Plans
-                </Link>
+                </span>
               </li>
               <li>
-                <Link href="/insights" className="text-gray-300 hover:text-[#C49B3E]">
+                <span className="text-gray-300 hover:text-[#C49B3E] cursor-pointer">
                   Market Insights
-                </Link>
+                </span>
               </li>
               <li>
-                <Link href="/projects" className="text-gray-300 hover:text-[#C49B3E]">
+                <span className="text-gray-300 hover:text-[#C49B3E] cursor-pointer">
                   Projects
-                </Link>
+                </span>
               </li>
               <li>
-                <Link href="/resources" className="text-gray-300 hover:text-[#C49B3E]">
+                <span className="text-gray-300 hover:text-[#C49B3E] cursor-pointer">
                   Resources
-                </Link>
+                </span>
               </li>
               <li>
-                <Link href="/contact" className="text-gray-300 hover:text-[#C49B3E]">
+                <span className="text-gray-300 hover:text-[#C49B3E] cursor-pointer">
                   Contact
-                </Link>
+                </span>
               </li>
             </ul>
           </div>
@@ -82,28 +100,43 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start">
                 <MapPin className="mr-2 h-5 w-5 text-[#C49B3E]" />
-                <span className="text-gray-300">
-                  1234 Energy Plaza, Suite 500
-                  <br />
-                  Houston, TX 77002, USA
-                </span>
+                <a
+                  href="https://www.google.com/maps?q=Los+Angeles,+CA,+USA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:underline"
+                >
+                  USA, Los Angeles, CA, United States, California
+                </a>
               </li>
               <li className="flex items-center">
-                <Phone className="mr-2 h-5 w-5 text-[#C49B3E]" />
-                <span className="text-gray-300">+1 (800) 123-4567</span>
+                <FaTelegramPlane className="mr-2 h-5 w-5 text-[#C49B3E]" />
+                <a
+                  href="https://t.me/petroxcin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:underline"
+                >
+                  @petroxcin
+                </a>
               </li>
               <li className="flex items-center">
                 <Mail className="mr-2 h-5 w-5 text-[#C49B3E]" />
-                <span className="text-gray-300">info@energyinvest.com</span>
+                <a
+                  href="mailto:petroxcin@gmail.com"
+                  className="text-gray-300 hover:underline"
+                >
+                  petroxcin@gmail.com
+                </a>
               </li>
             </ul>
           </div>
-
           {/* Newsletter */}
           <div>
             <h3 className="mb-4 font-serif text-lg font-bold">Newsletter</h3>
             <p className="mb-4 text-sm text-gray-300">
-              Subscribe to our newsletter for the latest market insights and investment opportunities.
+              Subscribe to our newsletter for the latest market insights and
+              investment opportunities.
             </p>
             <form className="space-y-2">
               <Input
@@ -111,7 +144,9 @@ export function Footer() {
                 placeholder="Your email address"
                 className="bg-white/10 text-white placeholder:text-gray-400"
               />
-              <Button className="w-full bg-[#C49B3E] text-white hover:bg-[#B38A2D]">Subscribe</Button>
+              <Button className="w-full bg-[#C49B3E] text-white hover:bg-[#B38A2D]">
+                Subscribe
+              </Button>
             </form>
           </div>
         </div>
@@ -119,16 +154,26 @@ export function Footer() {
         <div className="mt-12 border-t border-white/10 pt-8">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <p className="text-sm text-gray-300">
-              &copy; {new Date().getFullYear()} EnergyInvest. All rights reserved.
+              &copy; {new Date().getFullYear()} EnergyInvest. All rights
+              reserved.
             </p>
             <div className="flex space-x-6 text-sm">
-              <Link href="/terms" className="text-gray-300 hover:text-[#C49B3E]">
+              <Link
+                href="/terms"
+                className="text-gray-300 hover:text-[#C49B3E]"
+              >
                 Terms of Service
               </Link>
-              <Link href="/privacy" className="text-gray-300 hover:text-[#C49B3E]">
+              <Link
+                href="/privacy"
+                className="text-gray-300 hover:text-[#C49B3E]"
+              >
                 Privacy Policy
               </Link>
-              <Link href="/disclaimer" className="text-gray-300 hover:text-[#C49B3E]">
+              <Link
+                href="/disclaimer"
+                className="text-gray-300 hover:text-[#C49B3E]"
+              >
                 Investment Disclaimer
               </Link>
             </div>
@@ -136,5 +181,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
