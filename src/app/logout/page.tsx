@@ -8,7 +8,7 @@ export default function LogoutPage() {
   const router = useRouter();
 
   useEffect(() => {
-    Cookies.remove("yeldoToken");
+    Cookies.remove("petroxcinToken");
     router.push("/");
   }, [router]);
 

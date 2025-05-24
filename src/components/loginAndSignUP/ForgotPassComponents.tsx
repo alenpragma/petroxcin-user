@@ -1,6 +1,6 @@
 "use client";
 import type React from "react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import {
@@ -19,7 +19,6 @@ import { TextField } from "@/src/components/form copy/fields/TextField";
 import { z } from "zod";
 import { AiOutlineMail } from "react-icons/ai";
 import { useMutation } from "@tanstack/react-query";
-import axiosInstance from "@/src/utils/fetch/axiosConfig/axiosConfig";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Images } from "@/src/lib/store/image/image";
@@ -28,7 +27,7 @@ import {
   showMailModal,
   showSuccessModal,
 } from "@/src/components/shared/toastAlert/ToastSuccess";
-
+import axiosInstance from "@/src/utils/fetch/axiosConfig/axiosForPass";
 const FormSchema = z.object({
   email: z.string().email({ message: "Input valid email" }),
 });
@@ -41,37 +40,34 @@ const initialValues: FormType = {
 export default function ForgotPassComponents() {
   const router = useRouter();
   const formRef = useRef<GenericFormRef<FormType>>(null);
-  const { isPending } = useMutation({
+  const [email, setEmail] = useState("");
+  const { mutate, isPending } = useMutation({
     mutationFn: async (data: FormType | React.FormEvent<HTMLFormElement>) => {
-      const response = await axiosInstance.post(`/login`, data);
+      const response = await axiosInstance.post(
+        `/forget-password-send-mail`,
+        data
+      );
       return response;
     },
     onSuccess: (data: any) => {
-      if (data?.success === true) {
-        Cookies.set("yeldoToken", data?.data?.data?.token, { expires: 3 });
-        router.push("/dashboard");
-        showSuccessModal("Success", data?.data?.message);
-      } else {
-        const mainMessage = data?.data?.message || "Something went wrong";
-        const emailError = data?.data?.errors?.email;
-
-        showMailModal(
-          "Oops!",
-          emailError ? `${mainMessage}: ${emailError}` : mainMessage
-        );
-      }
+      showMailModal("Success", data?.data?.message);
+      console.log(email);
+      Cookies.set("petroxcinEmail", email, { expires: 3 });
+      router.push("/forgot-password/otp");
     },
-    onError() {
-      showErrorModal("!Opps", "Something went wrong");
+    onError(err: any) {
+      showErrorModal("!Opps", err.message.message);
     },
   });
   const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
-    console.log(data);
+    if ("email" in data) {
+      setEmail(data.email);
+      mutate(data);
+    }
   };
 
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
       <div className="w-full max-w-md">
         <div className="flex justify-center mb-5 w-full">
           <Link href="/">

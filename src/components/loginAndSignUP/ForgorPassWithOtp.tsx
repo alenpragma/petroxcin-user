@@ -7,7 +7,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/src/components/ui/card";
@@ -19,10 +18,7 @@ import { SubmitButton } from "@/src/components/form copy/fields/SubmitButton";
 import { TextField } from "@/src/components/form copy/fields/TextField";
 import { z } from "zod";
 import { AiOutlineMail } from "react-icons/ai";
-import { CiLock } from "react-icons/ci";
-import { GoEye, GoEyeClosed } from "react-icons/go";
 import { useMutation } from "@tanstack/react-query";
-import axiosInstance from "@/src/utils/fetch/axiosConfig/axiosConfig";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Images } from "@/src/lib/store/image/image";
@@ -31,51 +27,61 @@ import {
   showMailModal,
   showSuccessModal,
 } from "@/src/components/shared/toastAlert/ToastSuccess";
+import axiosInstance from "@/src/utils/fetch/axiosConfig/axiosForPass";
+import { GoEye, GoEyeClosed } from "react-icons/go";
+import { CiLock } from "react-icons/ci";
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Input valid email" }),
-  password: z.string().min(6, { message: "Input valid password" }),
+  code: z
+    .string()
+    .length(6, { message: "Code must be exactly 6 digits" })
+    .regex(/^\d{6}$/, { message: "Code must contain only digits" }),
+  password: z.string().nonempty({ message: "Please enter your password" }),
+  confirm_password: z
+    .string()
+    .nonempty({ message: "Please enter your confirm password" }),
+  referCode: z.string().optional(),
 });
 type FormType = z.infer<typeof FormSchema>;
 
-const initialValues: FormType = {
-  email: "",
-  password: "",
-};
-
-export default function LoginFormComponent() {
-  const router = useRouter();
-  const formRef = useRef<GenericFormRef<FormType>>(null);
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (data: FormType | React.FormEvent<HTMLFormElement>) => {
-      const response = await axiosInstance.post(`/login`, data);
-      return response;
-    },
-    onSuccess: (data: any) => {
-      console.log(data);
-      if (data?.data?.success === true) {
-        Cookies.set("petroxcinToken", data?.data?.data?.token, { expires: 3 });
-        router.push("/dashboard");
-        showSuccessModal("Success", data?.data?.message);
-      } else {
-        const mainMessage = data?.data?.message || "Something went wrong";
-        const emailError = data?.data?.errors?.email;
-        showMailModal(
-          "Oops!",
-          emailError ? `${mainMessage}: ${emailError}` : mainMessage
-        );
-      }
-    },
-    onError() {
-      showErrorModal("!Opps", "Something went wrong");
-    },
-  });
-  const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
-    mutate(data);
-  };
+export default function ForgorPassWithOtp() {
   const [showPass, setShowPass] = useState<boolean>(false);
   const handlePass = () => {
     setShowPass(!showPass);
+  };
+  const email = Cookies.get("petroxcinEmail");
+  const initialValues: FormType = {
+    email: email || "",
+    code: "",
+    password: "",
+    confirm_password: "",
+  };
+  const router = useRouter();
+  const formRef = useRef<GenericFormRef<FormType>>(null);
+  type forgotType = Omit<FormType, "confirm_password">;
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: forgotType | React.FormEvent<HTMLFormElement>) => {
+      console.log(data);
+      const response = await axiosInstance.post(`/reset-password`, data);
+      return response;
+    },
+    onSuccess: (data: any) => {
+      showSuccessModal("Success", data?.data?.message);
+      router.push("/login");
+    },
+    onError(err: any) {
+      showErrorModal("!Opps", err?.message?.message);
+    },
+  });
+  const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
+    if ("preventDefault" in data) return;
+    const { confirm_password, ...rest } = data;
+    const finalData = {
+      ...rest,
+    };
+
+    mutate(finalData);
   };
 
   return (
@@ -89,10 +95,10 @@ export default function LoginFormComponent() {
         <Card>
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold text-center">
-              Login to your account
+              Forgot your passowrd
             </CardTitle>
             <CardDescription className="text-center">
-              Enter your email and password to access your dashboard
+              Enter your confirmation here
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -105,13 +111,13 @@ export default function LoginFormComponent() {
               <div className="space-y-3 mb-5">
                 <div className="relative">
                   <TextField
-                    name="email"
-                    label="Email"
-                    type="email"
-                    placeholder="xyz@gmail.com"
+                    name="code"
+                    label="Code"
+                    placeholder="Enter your otp"
+                    type="number"
                     inputClass="pl-8"
                   />
-                  <AiOutlineMail className="absolute top-[42px] size-5 text-[#898989] left-1" />
+                  <CiLock className="absolute top-[42px] size-5 text-[#898989] left-1" />
                 </div>
                 <div className="relative">
                   <TextField
@@ -121,7 +127,7 @@ export default function LoginFormComponent() {
                     type={!showPass ? "password" : "text"}
                     inputClass="pl-8"
                   />
-                  <CiLock className="absolute  top-[42px] size-5 text-[#898989] left-1" />
+                  <CiLock className="absolute top-[42px] size-5 text-[#898989] left-1" />
                   {!showPass ? (
                     <GoEyeClosed
                       onClick={handlePass}
@@ -133,35 +139,26 @@ export default function LoginFormComponent() {
                       className="absolute top-[42px] size-5 text-[#898989] right-1 cursor-pointer"
                     />
                   )}
-                  <div className="w-full text-end">
-                    <Link
-                      className="text-end text-blue-500 text-[14px] font-medium"
-                      href="/forgot-password"
-                    >
-                      Forgot Password?
-                    </Link>
-                  </div>
+                </div>
+                <div className="relative">
+                  <TextField
+                    name="confirm_password"
+                    label="Confirm Password"
+                    placeholder="Enter your confirm password"
+                    type="password"
+                    inputClass="pl-8"
+                  />
+                  <CiLock className="absolute top-[42px] size-5 text-[#898989] left-1" />
                 </div>
               </div>
               <SubmitButton
                 width="full"
-                label="Login"
+                label="Submit"
                 isLoading={isPending}
                 loadingLabel="Processing.."
               />
             </GenericForm>
           </CardContent>
-          <CardFooter className="flex flex-col">
-            <div className="text-center text-sm mt-2">
-              Don&apos;t have an account?{" "}
-              <Link
-                href="/register"
-                className="text-blue-600 hover:underline font-medium"
-              >
-                Sign up
-              </Link>
-            </div>
-          </CardFooter>
         </Card>
       </div>
     </div>

@@ -13,7 +13,7 @@ export type IGenericErrorMessage = {
 };
 
 const axiosInstance = axios.create({
-  baseURL: `https://api.petroxcin.com/api/user`,
+  baseURL: `https://api.petroxcin.com/api`,
   timeout: 30000,
   headers: {
     "Content-Type": "application/json",
