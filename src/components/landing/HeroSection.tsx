@@ -9,7 +9,7 @@ const HeroSection = () => {
       style={{ backgroundImage: "url('/hero.gif')" }}
     >
       {/* Optional dark overlay */}
-      <div className="absolute inset-0 bg-black/60 z-10" />
+      <div className="absolute inset-0  z-10" />
 
       {/* Content */}
       <div className="relative z-20 mx-auto flex min-h-[600px] max-w-7xl flex-col items-center justify-center px-4 py-20 text-center text-white sm:px-6 lg:px-8">
