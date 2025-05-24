@@ -111,7 +111,7 @@ export default function LoginFormComponent() {
                     placeholder="xyz@gmail.com"
                     inputClass="pl-8"
                   />
-                  <AiOutlineMail className="absolute top-[42px] size-4 text-[#898989] left-1" />
+                  <AiOutlineMail className="absolute top-[42px] size-5 text-[#898989] left-1" />
                 </div>
                 <div className="relative">
                   <TextField
@@ -121,7 +121,7 @@ export default function LoginFormComponent() {
                     type={!showPass ? "password" : "text"}
                     inputClass="pl-8"
                   />
-                  <CiLock className="absolute  top-[42px] size-4 text-[#898989] left-1" />
+                  <CiLock className="absolute  top-[42px] size-5 text-[#898989] left-1" />
                   {!showPass ? (
                     <GoEyeClosed
                       onClick={handlePass}
@@ -133,6 +133,14 @@ export default function LoginFormComponent() {
                       className="absolute top-[42px] size-5 text-[#898989] right-1 cursor-pointer"
                     />
                   )}
+                  <div className="w-full text-end">
+                    <Link
+                      className="text-end text-blue-500 text-[14px] font-medium"
+                      href="/forgot-password"
+                    >
+                      Forgot Password?
+                    </Link>
+                  </div>
                 </div>
               </div>
               <SubmitButton

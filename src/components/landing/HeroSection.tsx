@@ -4,8 +4,15 @@ import Link from "next/link";
 
 const HeroSection = () => {
   return (
-    <section className="bg-gradient-to-br from-[#0A1F44] via-[#0D2E5A] to-[#0A1F44] relative">
-      <div className="relative z-10 mx-auto flex min-h-[600px] max-w-7xl flex-col items-center justify-center px-4 py-20 text-center text-white sm:px-6 lg:px-8">
+    <section
+      className="relative h-[600px] w-full overflow-hidden bg-cover bg-center"
+      style={{ backgroundImage: "url('/hero.gif')" }}
+    >
+      {/* Optional dark overlay */}
+      <div className="absolute inset-0 bg-black/60 z-10" />
+
+      {/* Content */}
+      <div className="relative z-20 mx-auto flex min-h-[600px] max-w-7xl flex-col items-center justify-center px-4 py-20 text-center text-white sm:px-6 lg:px-8">
         <h1 className="font-serif text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
           Invest in the Energy That{" "}
           <span className="text-[#C49B3E]">Powers the World</span>
@@ -36,9 +43,10 @@ const HeroSection = () => {
       </div>
 
       {/* Decorative elements */}
-      <div className="absolute bottom-0 left-0 h-24 w-24 rounded-tr-full bg-[#C49B3E]/20"></div>
-      <div className="absolute top-0 right-0 h-24 w-24 rounded-bl-full bg-[#C49B3E]/20"></div>
+      <div className="absolute bottom-0 left-0 h-24 w-24 rounded-tr-full bg-[#C49B3E]/20 z-30"></div>
+      <div className="absolute top-0 right-0 h-24 w-24 rounded-bl-full bg-[#C49B3E]/20 z-30"></div>
     </section>
   );
 };
+
 export default HeroSection;

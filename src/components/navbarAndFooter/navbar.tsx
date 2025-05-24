@@ -45,11 +45,11 @@ export function Navbar({ token }: { token: string | undefined }) {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                {/* <Link href="/" legacyBehavior passHref> */}
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Home
-                </NavigationMenuLink>
-                {/* </Link> */}
+                <Link href="/" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Home
+                  </NavigationMenuLink>
+                </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 {/* <Link href="/about" legacyBehavior passHref> */}
@@ -142,8 +142,7 @@ export function Navbar({ token }: { token: string | undefined }) {
           <Link href="/dashboard">
             <Button className="bg-[#C49B3E] text-white hover:bg-[#B38A2D]">
               Dashboard
-            </Button>
-            //{" "}
+            </Button>{" "}
           </Link>
         )}
 
@@ -158,7 +157,7 @@ export function Navbar({ token }: { token: string | undefined }) {
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <div className="flex flex-col gap-6 py-6">
-                {/* <Link href="/" className="flex items-center"> */}
+                <Link href="/" className="flex items-center">
                 <Image
                   className="w-32"
                   src={Images.logo}
@@ -166,11 +165,14 @@ export function Navbar({ token }: { token: string | undefined }) {
                   width={500}
                   height={500}
                 />
-                {/* </Link>  */}
+                </Link> 
                 <nav className="flex flex-col space-y-4">
-                  <li className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E] list-none">
+                  <Link
+                    href="/"
+                    className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E] list-none"
+                  >
                     Home
-                  </li>
+                  </Link>
                   <li className="text-lg font-medium text-[#0A1F44] hover:text-[#C49B3E] list-none">
                     About Us
                   </li>

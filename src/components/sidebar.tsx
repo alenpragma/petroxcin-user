@@ -80,8 +80,8 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
         )}
       >
         <div className="flex justify-center mb-5 w-full">
-          <Link href="/">
-            <Image className="w-44" src={Images.logo} alt="img" />
+          <Link href="/dashboard">
+            <Image className="w-44 mt-3" src={Images.logo} alt="img" />
           </Link>
         </div>
         <nav className="p-4 space-y-1">

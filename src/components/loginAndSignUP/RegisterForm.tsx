@@ -59,7 +59,7 @@ export default function RegisterForm() {
     },
     onSuccess: (data: any) => {
       // Cookies.set("yeldoToken", data?.data?.data?.token, { expires: 3 });
-      // router.push("/dashboard");
+      router.push("/login");
       showSuccessModal("Success",  data?.data?.message);
     },
     onError(err: any) {
@@ -128,7 +128,7 @@ export default function RegisterForm() {
                     placeholder="Enter name"
                     inputClass="pl-8"
                   />
-                  <CiUser className="absolute top-[42px] size-4 text-[#898989] left-1" />
+                  <CiUser className="absolute top-[42px] size-5 text-[#898989] left-1" />
                 </div>
                 <div className="relative">
                   <TextField
@@ -138,7 +138,7 @@ export default function RegisterForm() {
                     placeholder="xyz@gmail.com"
                     inputClass="pl-8"
                   />
-                  <AiOutlineMail className="absolute top-[42px] size-4 text-[#898989] left-1" />
+                  <AiOutlineMail className="absolute top-[42px] size-5 text-[#898989] left-1" />
                 </div>
                 <div className="relative">
                   <PhoneNumberField
@@ -153,7 +153,7 @@ export default function RegisterForm() {
                     type="number"
                     inputClass="pl-8"
                   /> */}
-                  {/* <MdSmartphone className="absolute top-[42px] size-4 text-[#898989] left-1" /> */}
+                  {/* <MdSmartphone className="absolute top-[42px] size-5 text-[#898989] left-1" /> */}
                 </div>
                 <div className="relative">
                   <TextField
@@ -163,7 +163,7 @@ export default function RegisterForm() {
                     type={!showPass ? "password" : "text"}
                     inputClass="pl-8"
                   />
-                  <CiLock className="absolute top-[42px] size-4 text-[#898989] left-1" />
+                  <CiLock className="absolute top-[42px] size-5 text-[#898989] left-1" />
                   {!showPass ? (
                     <GoEyeClosed
                       onClick={handlePass}
@@ -184,7 +184,7 @@ export default function RegisterForm() {
                     type="password"
                     inputClass="pl-8"
                   />
-                  <CiLock className="absolute top-[42px] size-4 text-[#898989] left-1" />
+                  <CiLock className="absolute top-[42px] size-5 text-[#898989] left-1" />
                 </div>
 
                 <div className="relative">
@@ -196,7 +196,7 @@ export default function RegisterForm() {
                     inputClass="pl-8"
                     readOnly={!!referCode}
                   />
-                  <IoMdShareAlt className="absolute top-[42px] size-4 text-[#898989] left-1" />
+                  <IoMdShareAlt className="absolute top-[42px] size-5 text-[#898989] left-1" />
                 </div>
               </div>
               <SubmitButton
