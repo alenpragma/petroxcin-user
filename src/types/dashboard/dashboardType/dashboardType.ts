@@ -23,6 +23,7 @@ export interface IUserProfileResponse {
   totalTransfer: number;
   totalDeposit: number;
   totalEarning: number;
+  totalReferBonus: number;
   profit_wallet: string;
   wallet: string;
 }

@@ -60,10 +60,10 @@ export function EarningStatistic({
               <CircleDollarSign className="h-5 w-5 text-blue-600" />
             </div>
             <div>
-              <div className="text-xs text-gray-500">Daily Bonus</div>
+              <div className="text-xs text-gray-500">Profit Revenue</div>
               <div className="font-bold">
                 $
-                {Number(profileData.profit_wallet).toLocaleString(undefined, {
+                {Number(profileData.roi).toLocaleString(undefined, {
                   minimumFractionDigits: 3,
                   maximumFractionDigits: 3,
                 })}
@@ -76,7 +76,7 @@ export function EarningStatistic({
             </div>
             <div>
               <div className="text-xs text-gray-500">Refer Bonus</div>
-              <div className="font-bold">${profileData.totalEarning}</div>
+              <div className="font-bold">${profileData.totalReferBonus}</div>
             </div>
           </div>
         </div>
@@ -91,7 +91,9 @@ export function EarningStatistic({
                   className="bg-blue-600 w-5 rounded-sm ml-8"
                   style={{ height: `${value * 2}px` }}
                 ></div>
-                <div className="text-xs text-gray-500 ml-7">{months[index]}</div>
+                <div className="text-xs text-gray-500 ml-7">
+                  {months[index]}
+                </div>
               </div>
             ))}
           </div>

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const token = request.cookies.get("yeldoToken")?.value;
+  const token = request.cookies.get("petroxcinToken")?.value;
   const { pathname } = request.nextUrl;
   if (!token && !["/login", "/register"].includes(pathname)) {
     return NextResponse.redirect(new URL("/login", request.url));

@@ -6,25 +6,27 @@ import { WalletCards } from "@/src/components/ui/dashboard/dashboardHome/wallet-
 import { StatCards } from "@/src/components/ui/dashboard/dashboardHome/stat-cards";
 import { EarningStatistic } from "@/src/components/ui/dashboard/dashboardHome/earning-statistic";
 import { ReferralLink } from "@/src/components/ui/dashboard/dashboardHome/referral-link";
-import { IUserProfileResponse } from "@/src/types/dashboard/dashboardType/dashboardType";
+import { useGetData } from "@/src/utils/fetch/getData/getData";
+import Loadingcomponents from "@/src/components/shared/loadingComponents/LoadingComponents";
 
-export function DashboardPage({
-  profileData,
-}: {
-  profileData: IUserProfileResponse;
-}) {
+export function DashboardPage() {
+  const { data: profile, isLoading } = useGetData(["profile"], `/profile`);
+  const profileData = profile?.data;
+  if (isLoading) {
+    return <Loadingcomponents />;
+  }
   return (
     <>
-      <MetricCards profileData={profileData}/>
+      <MetricCards profileData={profileData} />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="lg:col-span-1 space-y-6">
           <QuickActions />
           <EarningStatistic profileData={profileData} />
         </div>
         <div className="space-y-6">
-          <WalletCards  profileData={profileData} />
-          <StatCards profileData={profileData}/>
-          <ReferralLink refer={profileData.user.refer_code}/>
+          <WalletCards profileData={profileData} />
+          <StatCards profileData={profileData} />
+          <ReferralLink refer={profileData.user.refer_code} />
         </div>
       </div>
     </>

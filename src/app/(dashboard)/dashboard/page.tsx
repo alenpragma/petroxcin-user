@@ -10,7 +10,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 const Dashboard = async () => {
-  const { data: profileData } = await getDataWithValidation("profile");
-  return <DashboardPage profileData={profileData}/>;
+  // const { data: profileData } = await getDataWithValidation("profile");
+  return <DashboardPage />;
 };
 export default Dashboard;

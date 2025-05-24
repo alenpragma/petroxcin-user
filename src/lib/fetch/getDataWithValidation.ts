@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 export async function getDataWithValidation(endpoint: string) {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get("yeldoToken")?.value;
+    const token = cookieStore.get("petroxcinToken")?.value;
 
     const url = `https://api.petroxcin.com/api/user/${endpoint}`;
 

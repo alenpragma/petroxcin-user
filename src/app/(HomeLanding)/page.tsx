@@ -11,7 +11,7 @@ import { cookies } from "next/headers";
 
 export default async function Home() {
   const cookieStore = await cookies();
-  const token = await cookieStore.get("yeldoToken")?.value;
+  const token = await cookieStore.get("petroxcinToken")?.value;
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar token={token}/>

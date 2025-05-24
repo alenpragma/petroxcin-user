@@ -28,7 +28,6 @@ import axiosInstance from "@/src/utils/fetch/axiosConfig/axiosConfig";
 
 import { CiUser } from "react-icons/ci";
 import { registerFormSchema } from "@/src/schema/loginAndSignUp/loginAndSignUp";
-import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Images } from "@/src/lib/store/image/image";
@@ -58,7 +57,7 @@ export default function RegisterForm() {
       return response;
     },
     onSuccess: (data: any) => {
-      // Cookies.set("yeldoToken", data?.data?.data?.token, { expires: 3 });
+      // Cookies.set("petroxcinToken", data?.data?.data?.token, { expires: 3 });
       router.push("/login");
       showSuccessModal("Success",  data?.data?.message);
     },

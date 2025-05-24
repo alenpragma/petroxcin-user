@@ -14,6 +14,7 @@ import {
   showErrorModal,
   showSuccessModal,
 } from "../../shared/toastAlert/ToastSuccess";
+import { IUserProfileResponse } from "@/src/types/dashboard/dashboardType/dashboardType";
 
 const FormSchema = z.object({
   image1: z.instanceof(File).optional(),
@@ -27,7 +28,11 @@ const initialValues = {
   image2: undefined,
 } as FormType;
 
-const KycComponents = () => {
+const KycComponents = ({
+  profileData,
+}: {
+  profileData: IUserProfileResponse;
+}) => {
   const formRef = useRef<GenericFormRef<FormType>>(null);
   const [preview1, setPreview1] = useState<string | null>(null);
   const [preview2, setPreview2] = useState<string | null>(null);
@@ -127,44 +132,53 @@ const KycComponents = () => {
   );
 
   return (
-    <div className="md:w-1/2 w-full mx-auto">
-      <div className="text-center">
-        <h6 className="font-medium text-[20px]">Document Upload</h6>
-        <p>Upload clear photos of your identification document</p>
-      </div>
-      <div className="mt-8">
-        <p>
-          <span className="font-medium">Document Type :</span> National ID Card
-          / Passport
-        </p>
-      </div>
-      <div className="mt-6" />
-      <GenericForm
-        schema={FormSchema}
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        ref={formRef}
-      >
-        <p className="mb-1 font-medium">NID Card/Passport/Driving License</p>
-        {renderDropZone("Image 1", "image1", preview1)}
-        <p className="text-[14px]">
-          Upload your National ID or Passport or Driving License's image or PDF
-        </p>
-        <p className="mb-1 mt-5 font-medium">Selfie with ID</p>
-        {renderDropZone("Image 2", "image2", preview2)}
-        <p className="text-[14px]">
-          Take a photo of yourself holding your National ID. Make sure your face
-          and the document are clearly visible.
-        </p>
-        <div className="mt-5" />
-        <SubmitButton
-          width="full"
-          label="Submit"
-          isLoading={isPending}
-          loadingLabel="Processing.."
-        />{" "}
-      </GenericForm>
-    </div>
+    <>
+      {profileData.user.kyc_status === "0" ? (
+        <div className="md:w-1/2 w-full mx-auto">
+          <div className="text-center">
+            <h6 className="font-medium text-[20px]">Document Upload</h6>
+            <p>Upload clear photos of your identification document</p>
+          </div>
+          <div className="mt-8">
+            <p>
+              <span className="font-medium">Document Type :</span> National ID
+              Card / Passport
+            </p>
+          </div>
+          <div className="mt-6" />
+          <GenericForm
+            schema={FormSchema}
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            ref={formRef}
+          >
+            <p className="mb-1 font-medium">
+              NID Card/Passport/Driving License
+            </p>
+            {renderDropZone("Image 1", "image1", preview1)}
+            <p className="text-[14px]">
+              Upload your National ID or Passport or Driving License's image or
+              PDF
+            </p>
+            <p className="mb-1 mt-5 font-medium">Selfie with ID</p>
+            {renderDropZone("Image 2", "image2", preview2)}
+            <p className="text-[14px]">
+              Take a photo of yourself holding your National ID. Make sure your
+              face and the document are clearly visible.
+            </p>
+            <div className="mt-5" />
+            <SubmitButton
+              width="full"
+              label="Submit"
+              isLoading={isPending}
+              loadingLabel="Processing.."
+            />{" "}
+          </GenericForm>
+        </div>
+      ) : (
+        <p className="text-green-500">You'r allready kyc verified</p>
+      )}
+    </>
   );
 };
 
