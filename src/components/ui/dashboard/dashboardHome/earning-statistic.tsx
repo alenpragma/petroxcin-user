@@ -88,10 +88,10 @@ export function EarningStatistic({
                 className="flex flex-col items-center gap-2 w-1/8"
               >
                 <div
-                  className="bg-blue-600 w-10 rounded-sm"
+                  className="bg-blue-600 w-5 rounded-sm ml-8"
                   style={{ height: `${value * 2}px` }}
                 ></div>
-                <div className="text-xs text-gray-500">{months[index]}</div>
+                <div className="text-xs text-gray-500 ml-7">{months[index]}</div>
               </div>
             ))}
           </div>
