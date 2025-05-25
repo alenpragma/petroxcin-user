@@ -51,8 +51,7 @@ export default function LoginFormComponent() {
       const response = await axiosInstance.post(`/login`, data);
       return response;
     },
-    onSuccess: (data: any) => {
-      console.log(data);
+    onSuccess: async (data: any) => {
       if (data?.data?.success === true) {
         Cookies.set("petroxcinToken", data?.data?.data?.token, { expires: 3 });
         router.push("/dashboard");
