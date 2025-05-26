@@ -1,10 +1,8 @@
 "use client";
 import type React from "react";
 import { useMemo, useRef, useState } from "react";
-import { User } from "lucide-react";
 import {
   Avatar,
-  AvatarFallback,
   AvatarImage,
 } from "@/src/components/ui/avatar";
 import { Button } from "@/src/components/ui/button";
@@ -45,11 +43,11 @@ export default function ProfileClient() {
   const initialValues: FormType = {
     name: profile.user.name,
     mobile: profile.user.mobile,
-    nid_or_passport: "",
+    nid_or_passport: profile.user.nid_or_passport || "",
     year: "",
     day: "",
     month: "",
-    address: "",
+    address: profile.user.address || "",
   };
 
   // Inside your component
@@ -103,7 +101,7 @@ export default function ProfileClient() {
     },
     onSuccess: (data: any) => {
       showSuccessModal("Success", data?.data?.message);
-      // router.push("/dashboard");
+      router.push("/dashboard");
     },
     onError(err) {
       console.log(err);
