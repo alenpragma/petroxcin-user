@@ -20,6 +20,7 @@ interface Props<T extends FieldValues> {
   placeholder?: string;
   options: { value: string; text: string }[];
   required?: boolean;
+  onChange?: (value: any) => void;
 }
 
 /**
@@ -49,6 +50,7 @@ export const SelectField = <T extends FieldValues>({
   placeholder,
   options,
   required = false,
+  onChange, // <-- Accept as prop
 }: Props<T>) => {
   const { control } = useFormContext<T>();
 
@@ -64,7 +66,13 @@ export const SelectField = <T extends FieldValues>({
               {required && <span className="ml-1 text-red-500">*</span>}
             </FormLabel>
           )}
-          <Select onValueChange={field.onChange} value={field.value}>
+          <Select
+            value={field.value}
+            onValueChange={(value) => {
+              field.onChange(value);
+              onChange?.(value);
+            }}
+          >
             <FormControl>
               <SelectTrigger className="bg-[#F5F5F6]">
                 <SelectValue placeholder={placeholder ?? "Select an item"} />

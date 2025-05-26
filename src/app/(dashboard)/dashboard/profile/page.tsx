@@ -1,173 +1,6 @@
-// "use client";
-
-// import { TextField } from "@/src/components/form copy/fields/TextField";
-// import {
-//   GenericForm,
-//   GenericFormRef,
-// } from "@/src/components/form copy/GenericForm";
-// import { CopyToClipboard } from "@/src/components/shared/copyClipboard/copyClipboard";
-// import Loadingcomponents from "@/src/components/shared/loadingComponents/LoadingComponents";
-// import { Button } from "@/src/components/ui/button";
-// import { IUserProfileResponse } from "@/src/types/dashboard/dashboardType/dashboardType";
-// import { useGetData } from "@/src/utils/fetch/axiosConfig/FetchData";
-// import Image from "next/image";
-// import { useRef, useState } from "react";
-// import { z } from "zod";
-
-// const FormSchema = z.object({
-//   name: z.string().nonempty({ message: "Enter your name" }),
-//   mobile: z.number().min(6, { message: "Enter your mobile" }),
-// });
-// type FormType = z.infer<typeof FormSchema>;
-
-// const ProfilePage = () => {
-//   const formRef = useRef<GenericFormRef<FormType>>(null);
-//   const { data: profileData, isLoading } = useGetData(["profile"], `profile`);
-//   const [isEditable, setIsEditable] = useState(false); // ← Add edit state
-
-//   if (isLoading) return <Loadingcomponents />;
-
-//   const profile: IUserProfileResponse = profileData.data;
-//   const mobile = Number(profile.user.mobile);
-//   const initialValues: FormType = {
-//     name: profile.user.name,
-//     mobile: mobile,
-//   };
-
-//   const { copy, copied } = CopyToClipboard();
-//   const referralURL = `https://www.petroxcin.com/register?refer=${profile.user.refer_code}`;
-
-//   const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
-//     console.log(data);
-//   };
-
-//   return (
-//     <div className="px-3">
-//       <div className="bg-gradient-to-l from-[#ffffff53] to-[#09fc2545] h-24 w-full mb-2 rounded"></div>
-//       <div className="md:w-4/5 w-full mx-auto">
-//         <div className="flex items-center gap-5">
-//           <div className="size-24 bg-gray-400 p-1 rounded-full overflow-hidden">
-//             <Image
-//               className="size-full object-cover rounded-full"
-//               src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
-//               alt="img"
-//               width={500}
-//               height={500}
-//             />
-//           </div>
-//           <div>
-//             <h6 className="font-medium text-[18px]">{profile.user.name}</h6>
-//             <p className="text-gray-600">{profile.user.email}</p>
-//           </div>
-//           <div>
-//             <button
-//               className="w-fit px-3 py-1 rounded-mg bg-primary text-white rounded-md"
-//               onClick={() => setIsEditable((prev) => !prev)}
-//             >
-//               {isEditable ? "Cancel" : "Edit"}
-//             </button>
-//           </div>
-//         </div>
-
-//         <GenericForm
-//           schema={FormSchema}
-//           initialValues={initialValues}
-//           onSubmit={handleSubmit}
-//           ref={formRef}
-//         >
-//           <div className="space-y-5 mt-8">
-//             <div className="flex items-center w-full">
-//               <h6 className="font-medium md:w-1/6 w-2/6 flex justify-between">
-//                 Name <span className="pr-5">:</span>
-//               </h6>
-//               <div className="md:w-5/6 w-4/6">
-//                 <TextField
-//                   name="name"
-//                   type="text"
-//                   labelClass="text"
-//                   inputClass="px-2"
-//                   readOnly={!isEditable}
-//                 />
-//               </div>
-//             </div>
-
-//             <div className="flex items-center w-full">
-//               <h6 className="font-medium md:w-1/6 w-2/6 flex justify-between">
-//                 Mobile <span className="pr-5">:</span>
-//               </h6>
-//               <div className="w-5/6">
-//                 <TextField
-//                   name="mobile"
-//                   type="number"
-//                   labelClass="text"
-//                   inputClass="px-2"
-//                   readOnly={!isEditable}
-//                 />
-//               </div>
-//             </div>
-
-//             <div className="flex items-center w-full">
-//               <h6 className="font-medium md:w-1/6 w-2/6 flex justify-between">
-//                 Refer <span className="pr-5">:</span>
-//               </h6>
-//               <div className="w-5/6">
-//                 <span>{referralURL}</span>
-//                 <Button
-//                   className="border border-gray-400 bg-[#ffffff2d] text-gray-700 px-4 py-0 text-[12px] hover:bg-[#707070be] hover:text-white ml-2"
-//                   onClick={() => copy(referralURL)}
-//                   type="button"
-//                 >
-//                   {copied ? "Copied" : "Copy Link"}
-//                 </Button>
-//               </div>
-//             </div>
-
-//             <div className="flex items-center w-full">
-//               <h6 className="font-medium md:w-1/6 w-2/6 flex justify-between">
-//                 KYC status <span className="pr-5">:</span>
-//               </h6>
-//               <div className="w-5/6">
-//                 <span>True</span>
-//               </div>
-//             </div>
-
-//             <div className="flex items-center w-full">
-//               <h6 className="font-medium md:w-1/6 w-2/6 flex justify-between">
-//                 Direct Refer <span className="pr-5">:</span>
-//               </h6>
-//               <div className="w-5/6">
-//                 <span>50</span>
-//               </div>
-//             </div>
-
-//             <div className="flex items-center w-full">
-//               <h6 className="font-medium md:w-1/6 w-2/6 flex justify-between">
-//                 Total Team <span className="pr-5">:</span>
-//               </h6>
-//               <div className="w-5/6">
-//                 <span>20</span>
-//               </div>
-//             </div>
-
-//             {isEditable && (
-//               <div className="flex justify-end">
-//                 <Button type="submit" className="bg-primary text-white px-6">
-//                   Save
-//                 </Button>
-//               </div>
-//             )}
-//           </div>
-//         </GenericForm>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ProfilePage;
-
 "use client";
 import type React from "react";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { User } from "lucide-react";
 import {
   Avatar,
@@ -185,16 +18,23 @@ import {
 } from "@/src/components/form copy/GenericForm";
 import { z } from "zod";
 import { TextField } from "@/src/components/form copy/fields/TextField";
-import { DateField } from "@/src/components/form copy/fields/DateField";
+import axiosInstance from "@/src/utils/fetch/axiosConfig/axiosConfig";
+import { useMutation } from "@tanstack/react-query";
+import { SelectField } from "@/src/components/form copy/fields/SelectField";
+import { SubmitButton } from "@/src/components/form copy/fields/SubmitButton";
+import { showSuccessModal } from "@/src/components/shared/toastAlert/ToastSuccess";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   name: z.string().nonempty({ message: "Enter your name" }),
-  address: z.string().nonempty({ message: "Enter your name" }),
-  mobile: z.number().min(6, { message: "Enter your mobile" }),
-  dob: z.date({
-    required_error: "A date of birth is required.",
-  }),
+  address: z.string().nonempty({ message: "Enter your address" }),
+  mobile: z.string().min(6, { message: "Enter your mobile" }),
+  nid: z.string().min(6, { message: "Enter your nid or passport" }),
+  year: z.string().nonempty({ message: "Select year" }),
+  day: z.string().nonempty({ message: "Select day" }),
+  month: z.string().nonempty({ message: "Select month" }),
 });
+
 type FormType = z.infer<typeof FormSchema>;
 
 export default function ProfileClient() {
@@ -204,8 +44,11 @@ export default function ProfileClient() {
   const mobile = Number(profile.user.mobile);
   const initialValues: FormType = {
     name: profile.user.name,
-    mobile: mobile,
-    dob: new Date(),
+    mobile: "",
+    nid: "",
+    year: "",
+    day: "",
+    month: "",
     address: "",
   };
 
@@ -227,10 +70,85 @@ export default function ProfileClient() {
 
   const { copy, copied } = CopyToClipboard();
   const referralURL = `https://www.petroxcin.com/register?refer=${profile.user.refer_code}`;
-  if (isLoading) return <Loadingcomponents />;
-  const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
-    console.log(data);
+  const router = useRouter();
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: FormType) => {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("mobile", data.mobile.toLocaleString());
+      formData.append("address", data.address);
+      formData.append("birthday", `${data.year}-${data.month}-${data.day}`);
+      formData.append("nid_or_passport", data.nid.toLocaleString());
+      const response = await axiosInstance.post(`/profile/update`, data);
+      return response;
+    },
+    onSuccess: (data: any) => {
+      showSuccessModal("Success", data?.data?.message);
+      router.push("/");
+    },
+    onError(err) {
+      console.log(err);
+    },
+  });
+  const handleSubmit = (data: FormType) => {
+    mutate(data);
   };
+  const [selectedMonth, setSelectedMonth] = useState("0"); // "0" means not selected
+  const [selectedYear, setSelectedYear] = useState("");
+
+  const currentYear = new Date().getFullYear();
+
+  const months = [
+    { value: "0", text: "Month" },
+    { value: "1", text: "January" },
+    { value: "2", text: "February" },
+    { value: "3", text: "March" },
+    { value: "4", text: "April" },
+    { value: "5", text: "May" },
+    { value: "6", text: "June" },
+    { value: "7", text: "July" },
+    { value: "8", text: "August" },
+    { value: "9", text: "September" },
+    { value: "10", text: "October" },
+    { value: "11", text: "November" },
+    { value: "12", text: "December" },
+  ];
+
+  const years = [
+    { value: "0", text: "Year" },
+    ...Array.from({ length: 100 }, (_, i) => {
+      const y = currentYear - i;
+      return { value: String(y), text: String(y) };
+    }),
+  ];
+
+  // 💡 Memoized days list, recalculated only when month or year changes
+  const days = useMemo(() => {
+    const year = parseInt(selectedYear);
+    const month = parseInt(selectedMonth);
+
+    if (!month || !year) {
+      // Default 31 days if month/year not selected
+      return Array.from({ length: 31 }, (_, i) => ({
+        value: String(i + 1),
+        text: String(i + 1),
+      }));
+    }
+
+    // Month is 1-based; JavaScript Date uses 0-based month, so subtract 1
+    const daysInMonth = new Date(year, month, 0).getDate(); // tricky but correct
+
+    return Array.from({ length: daysInMonth }, (_, i) => ({
+      value: String(i + 1),
+      text: String(i + 1),
+    }));
+  }, [selectedMonth, selectedYear]);
+
+  const handleChenge = (value: string) => {
+    setSelectedYear(value);
+    setSelectedMonth(value);
+  };
+  if (isLoading) return <Loadingcomponents />;
   return (
     <div className="py-6 px-3">
       <div className="mb-6">
@@ -244,7 +162,7 @@ export default function ProfileClient() {
         <GenericForm
           schema={FormSchema}
           initialValues={initialValues}
-          onSubmit={handleSubmit}
+          onSubmit={(data) => handleSubmit(data as FormType)}
           ref={formRef}
         >
           <div className="grid grid-cols-12 gap-3">
@@ -320,7 +238,7 @@ export default function ProfileClient() {
                   name="mobile"
                   label="Mobile"
                   type="number"
-                  placeholder="remon"
+                  placeholder=""
                   inputClass=""
                 />
                 <TextField
@@ -329,7 +247,26 @@ export default function ProfileClient() {
                   type="number"
                   placeholder="345834958034958943"
                 />
-                <DateField name="dob" label="Date of Birth" />
+                <div>
+                  <p>Enter Your Birthday</p>
+                  <div className="w-full flex  gap-1">
+                    <SelectField
+                      name="year"
+                      options={years}
+                      placeholder=" Year"
+                      onChange={handleChenge}
+                    />{" "}
+                    <SelectField
+                      name="month"
+                      options={months}
+                      placeholder=" Month"
+                      onChange={handleChenge}
+                    />{" "}
+                    <SelectField name="day" options={days} placeholder="Day" />
+                  </div>
+                </div>
+
+                {/* <DateField name="dob" label="Date of Birth" /> */}
               </div>
               <div className="mt-3">
                 <TextField
@@ -340,10 +277,13 @@ export default function ProfileClient() {
                   inputClass=""
                 />
               </div>
-              <div className="mt-6">
-                <Button type="submit" className="w-full md:w-auto">
-                  Save Changes
-                </Button>
+              <div className="mt-3">
+                <SubmitButton
+                  width="full"
+                  label="Update Profile"
+                  isLoading={isPending}
+                  loadingLabel="Processing.."
+                />
               </div>
             </div>
           </div>
