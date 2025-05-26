@@ -27,12 +27,12 @@ import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   name: z.string().nonempty({ message: "Enter your name" }),
-  address: z.string().nonempty({ message: "Enter your address" }),
   mobile: z.string().min(6, { message: "Enter your mobile" }),
-  nid: z.string().min(6, { message: "Enter your nid or passport" }),
-  year: z.string().nonempty({ message: "Select year" }),
-  day: z.string().nonempty({ message: "Select day" }),
-  month: z.string().nonempty({ message: "Select month" }),
+  address: z.string().optional(),
+  nid_or_passport: z.string().optional(),
+  year: z.string().optional(),
+  day: z.string().optional(),
+  month: z.string().optional(),
 });
 
 type FormType = z.infer<typeof FormSchema>;
@@ -41,11 +41,11 @@ export default function ProfileClient() {
   const formRef = useRef<GenericFormRef<FormType>>(null);
   const { data: profileDatas, isLoading } = useGetData(["profile"], `profile`);
   const profile: IUserProfileResponse = profileDatas.data;
-  const mobile = Number(profile.user.mobile);
+  // const mobile = Number(profile.user.mobile);
   const initialValues: FormType = {
     name: profile.user.name,
-    mobile: "",
-    nid: "",
+    mobile: profile.user.mobile,
+    nid_or_passport: "",
     year: "",
     day: "",
     month: "",
@@ -53,12 +53,13 @@ export default function ProfileClient() {
   };
 
   // Inside your component
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null); // Store file
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setSelectedImage(file);
       const imageUrl = URL.createObjectURL(file);
       setPreviewImage(imageUrl);
     }
@@ -71,20 +72,38 @@ export default function ProfileClient() {
   const { copy, copied } = CopyToClipboard();
   const referralURL = `https://www.petroxcin.com/register?refer=${profile.user.refer_code}`;
   const router = useRouter();
+
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: FormType) => {
+      const date = `${data.year}-${String(data.month).padStart(
+        2,
+        "0"
+      )}-${String(data.day).padStart(2, "0")}`;
       const formData = new FormData();
       formData.append("name", data.name);
       formData.append("mobile", data.mobile.toLocaleString());
-      formData.append("address", data.address);
-      formData.append("birthday", `${data.year}-${data.month}-${data.day}`);
-      formData.append("nid_or_passport", data.nid.toLocaleString());
-      const response = await axiosInstance.post(`/profile/update`, data);
+      if (selectedImage) {
+        formData.append("image", selectedImage);
+      }
+      if (data.address) {
+        formData.append("address", data.address);
+      }
+      if (data.day) {
+        formData.append("birthday", date);
+      }
+      if (data.nid_or_passport) {
+        formData.append("nid_or_passport", data.nid_or_passport);
+      }
+      const response = await axiosInstance.post(`/profile/update`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       return response;
     },
     onSuccess: (data: any) => {
       showSuccessModal("Success", data?.data?.message);
-      router.push("/");
+      // router.push("/dashboard");
     },
     onError(err) {
       console.log(err);
@@ -169,18 +188,15 @@ export default function ProfileClient() {
             <div className="md:col-span-4 col-span-12 py-5 bg-white dark:bg-gray-800 rounded-lg shadow-sm border flex flex-col justify-center">
               <div className="flex flex-col items-center space-y-4">
                 <div onClick={handleAvatarClick} className="cursor-pointer">
-                  <Avatar className="size-28 border border-gray-500 p-0.5">
+                  <Avatar className="size-28 p-1 border border-gray-500">
                     <AvatarImage
-                      className="object-cover"
+                      className="size-full object-cover rounded-full"
                       src={
                         previewImage ||
-                        "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
+                        `https://api.petroxcin.com/public/storage/${profile.user.image}`
                       }
                       alt="Profile"
                     />
-                    <AvatarFallback>
-                      <User className="w-12 h-12" />
-                    </AvatarFallback>
                   </Avatar>
                 </div>
 
@@ -242,27 +258,38 @@ export default function ProfileClient() {
                   inputClass=""
                 />
                 <TextField
-                  name="nid"
+                  name="nid_or_passport"
                   label="NID/PASSPORT NO."
                   type="number"
-                  placeholder="345834958034958943"
+                  placeholder="Enter your NID number"
                 />
                 <div>
-                  <p>Enter Your Birthday</p>
+                  <p className="font-medium mb-2">Enter Your Birthday</p>
                   <div className="w-full flex  gap-1">
-                    <SelectField
-                      name="year"
-                      options={years}
-                      placeholder=" Year"
-                      onChange={handleChenge}
-                    />{" "}
-                    <SelectField
-                      name="month"
-                      options={months}
-                      placeholder=" Month"
-                      onChange={handleChenge}
-                    />{" "}
-                    <SelectField name="day" options={days} placeholder="Day" />
+                    <div className="flex-1">
+                      <SelectField
+                        name="year"
+                        options={years}
+                        placeholder=" Year"
+                        onChange={handleChenge}
+                      />
+                    </div>
+                    <div className="flex-1">
+                      {" "}
+                      <SelectField
+                        name="month"
+                        options={months}
+                        placeholder=" Month"
+                        onChange={handleChenge}
+                      />{" "}
+                    </div>
+                    <div className="flex-1">
+                      <SelectField
+                        name="day"
+                        options={days}
+                        placeholder="Day"
+                      />
+                    </div>
                   </div>
                 </div>
 

@@ -1,3 +1,4 @@
+import LogoutPage from "@/src/app/logout/page";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -41,10 +42,12 @@ axiosInstance.interceptors.response.use(
     return responseObject;
   },
   (error) => {
+    console.log(error.response.status);
     if (
       error.response &&
       (error.response.status === 401 || error.response.status === 403)
     ) {
+      window.location.href = "/logout";
     }
     const responseObject: IGenericErrorResponse = {
       statusCode: error?.response?.status || 500,

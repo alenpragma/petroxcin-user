@@ -71,18 +71,16 @@ export function Header({ onMenuClick, profileData }: HeaderProps) {
         <div className="flex items-center gap-1 text-blue-600">
           <span className="text-sm font-medium">{profileData?.user?.name}</span>
         </div>
-       
+
         {/* <Avatar> */}
         <Link href="/dashboard/profile">
-          <div className="size-10 bg-gray-400 p-0.5 rounded-full overflow-hidden">
-            <Image
-              className="size-full object-cover rounded-full"
-              src="https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"
-              alt="img"
-              width={500}
-              height={500}
+          <Avatar className="size-12 p-1 border border-gray-500">
+            <AvatarImage
+              className="size-full object-cover  rounded-full"
+              src={`https://api.petroxcin.com/public/storage/${profileData.user.image}`}
+              alt="Profile"
             />
-          </div>
+          </Avatar>
         </Link>
         {/* <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" /> */}
         {/* <AvatarFallback>{getInitials(userName)}</AvatarFallback> */}
