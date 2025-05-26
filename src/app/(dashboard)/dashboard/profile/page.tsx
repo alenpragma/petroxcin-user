@@ -1,10 +1,7 @@
 "use client";
 import type React from "react";
 import { useMemo, useRef, useState } from "react";
-import {
-  Avatar,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/src/components/ui/avatar";
 import { Button } from "@/src/components/ui/button";
 import { useGetData } from "@/src/utils/fetch/axiosConfig/FetchData";
 import Loadingcomponents from "@/src/components/shared/loadingComponents/LoadingComponents";
@@ -165,6 +162,11 @@ export default function ProfileClient() {
     setSelectedYear(value);
     setSelectedMonth(value);
   };
+
+  const [formEnable, setFromEnable] = useState(false);
+  const handleFormEnable = () => {
+    setFromEnable(true);
+  };
   if (isLoading) return <Loadingcomponents />;
   return (
     <div className="py-6 px-3">
@@ -237,9 +239,33 @@ export default function ProfileClient() {
                     : "Verified"}
                 </span>
               </p>
+              {profile.user.nid_or_passport !== null && (
+                <p className=" space-x-3 text-center">
+                  <span className="font-medium">NID/Passport :</span>
+                  <span>{profile.user.nid_or_passport}</span>
+                </p>
+              )}
+              {profile.user.birthday !== null && (
+                <p className=" space-x-3 text-center">
+                  <span className="font-medium">BirthDay :</span>
+                  <span>{profile.user.birthday}</span>
+                </p>
+              )}
+              {profile.user.address !== null && (
+                <p className=" space-x-3 text-center">
+                  <span className="font-medium">Address :</span>
+                  <span>{profile.user.address}</span>
+                </p>
+              )}
             </div>
 
             <div className="md:col-span-8 col-span-12 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border">
+              <div
+                className="bg-blue-500 px-6 py-2 rounded text-white w-fit mb-3 text-[14px] cursor-pointer"
+                onClick={handleFormEnable}
+              >
+                Edit Profile
+              </div>
               <div className="grid gap-4 md:grid-cols-2 grid-cols-1">
                 <TextField
                   name="name"
@@ -247,6 +273,7 @@ export default function ProfileClient() {
                   type="text"
                   placeholder="remon"
                   inputClass=""
+                  readOnly={!formEnable}
                 />
                 <TextField
                   name="mobile"
@@ -254,12 +281,13 @@ export default function ProfileClient() {
                   type="number"
                   placeholder=""
                   inputClass=""
+                  readOnly={!formEnable}
                 />
                 <TextField
                   name="nid_or_passport"
                   label="NID/PASSPORT NO."
                   type="number"
-                  placeholder="Enter your NID number"
+                  readOnly={!formEnable}
                 />
                 <div>
                   <p className="font-medium mb-2">Enter Your Birthday</p>
@@ -270,6 +298,7 @@ export default function ProfileClient() {
                         options={years}
                         placeholder=" Year"
                         onChange={handleChenge}
+                        readOnly={!formEnable}
                       />
                     </div>
                     <div className="flex-1">
@@ -279,6 +308,7 @@ export default function ProfileClient() {
                         options={months}
                         placeholder=" Month"
                         onChange={handleChenge}
+                        readOnly={!formEnable}
                       />{" "}
                     </div>
                     <div className="flex-1">
@@ -286,6 +316,7 @@ export default function ProfileClient() {
                         name="day"
                         options={days}
                         placeholder="Day"
+                        readOnly={!formEnable}
                       />
                     </div>
                   </div>
@@ -300,14 +331,15 @@ export default function ProfileClient() {
                   type="text"
                   placeholder="Enter your address"
                   inputClass=""
+                  readOnly={!formEnable}
                 />
               </div>
               <div className="mt-3">
                 <SubmitButton
                   width="full"
                   label="Update Profile"
-                  isLoading={isPending}
-                  loadingLabel="Processing.."
+                  isLoading={isPending || !formEnable}
+                  loadingLabel={isPending ? "Processing..." : "Update Profile"}
                 />
               </div>
             </div>

@@ -21,6 +21,7 @@ interface Props<T extends FieldValues> {
   options: { value: string; text: string }[];
   required?: boolean;
   onChange?: (value: any) => void;
+  readOnly?: boolean;
 }
 
 /**
@@ -50,7 +51,8 @@ export const SelectField = <T extends FieldValues>({
   placeholder,
   options,
   required = false,
-  onChange, // <-- Accept as prop
+  onChange,
+  readOnly,
 }: Props<T>) => {
   const { control } = useFormContext<T>();
 
@@ -68,6 +70,7 @@ export const SelectField = <T extends FieldValues>({
           )}
           <Select
             value={field.value}
+            disabled={readOnly}
             onValueChange={(value) => {
               field.onChange(value);
               onChange?.(value);
