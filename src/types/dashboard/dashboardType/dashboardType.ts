@@ -2,18 +2,22 @@ export interface IUserProfileResponse {
   user: {
     id: number;
     name: string;
+    image: string;
+    birthday: string | null;
+    nid_or_passport: string | null;
+    address: string | null;
     email: string;
     mobile: string;
-    wallet: string;
-    profit_wallet: string;
     refer_code: string;
-    refer_by: number;
-    is_active: number;
-    is_block: number;
+    refer_by: string | null;
+    is_active: string;
+    is_block: string;
+    kyc_status: string;
     created_at: string;
     updated_at: string;
-    kyc_status: string;
   };
+  wallet: string;
+  profit_wallet: string;
   teamInvest: number;
   directRefer: number;
   totalTeam: number;
@@ -24,6 +28,4 @@ export interface IUserProfileResponse {
   totalDeposit: number;
   totalEarning: number;
   totalReferBonus: number;
-  profit_wallet: string;
-  wallet: string;
 }

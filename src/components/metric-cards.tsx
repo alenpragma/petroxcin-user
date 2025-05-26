@@ -11,7 +11,7 @@ export const MetricCards = ({
     {
       first: "EAF1FF",
       second: "FFFFFF",
-      title: "Daily ROI",
+      title: "Profit Revenue",
       value: profileData?.roi,
       increase: "+200",
       icon: (
