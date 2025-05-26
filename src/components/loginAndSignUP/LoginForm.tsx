@@ -54,7 +54,8 @@ export default function LoginFormComponent() {
     onSuccess: (data: any) => {
       if (data?.data?.success === true) {
         Cookies.set("petroxcinToken", data?.data?.data?.token, { expires: 3 });
-        router.push("/dashboard");
+        // router.push("/dashboard");
+        window.location.href = "/dashboard";
         showSuccessModal("Success", data?.data?.message);
       } else {
         const mainMessage = data?.data?.message || "Something went wrong";

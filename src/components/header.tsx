@@ -71,10 +71,7 @@ export function Header({ onMenuClick, profileData }: HeaderProps) {
         <div className="flex items-center gap-1 text-blue-600">
           <span className="text-sm font-medium">{profileData?.user?.name}</span>
         </div>
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="h-5 w-5" />
-          <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-        </Button>
+       
         {/* <Avatar> */}
         <Link href="/dashboard/profile">
           <div className="size-10 bg-gray-400 p-0.5 rounded-full overflow-hidden">
