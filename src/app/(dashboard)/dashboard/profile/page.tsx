@@ -22,12 +22,15 @@ import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   name: z.string().nonempty({ message: "Enter your name" }),
-  mobile: z.string().min(6, { message: "Enter your mobile" }),
+  mobile: z
+    .string()
+    .min(10, { message: "Enter your mobile" })
+    .max(15, { message: "Mobile number is too long" }),
   address: z.string().optional(),
   nid_or_passport: z.string().optional(),
   year: z.string().optional(),
   day: z.string().optional(),
-  month: z.string().optional(),
+  month: z.any(),
 });
 
 type FormType = z.infer<typeof FormSchema>;
@@ -36,14 +39,73 @@ export default function ProfileClient() {
   const formRef = useRef<GenericFormRef<FormType>>(null);
   const { data: profileDatas, isLoading } = useGetData(["profile"], `profile`);
   const profile: IUserProfileResponse = profileDatas.data;
-  // const mobile = Number(profile.user.mobile);
+  const birthday = profile?.user?.birthday;
+  let day = "";
+  let month = "";
+  let year = "";
+  if (birthday) {
+    const dateObj = new Date(birthday);
+    day = String(dateObj.getDate()).padStart(2, "0");
+    month = String(dateObj.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+    year = String(dateObj.getFullYear());
+  }
+  console.log("kajsdlfjsldf", day, month, year);
+  const [selectedMonth, setSelectedMonth] = useState("0"); // "0" means not selected
+  const [selectedYear, setSelectedYear] = useState("");
+
+  const currentYear = new Date().getFullYear();
+
+  const handleChenge = (value: string) => {
+    setSelectedYear(value);
+    setSelectedMonth(value);
+  };
+  const months = [
+    { value: "01", text: "January" },
+    { value: "02", text: "February" },
+    { value: "03", text: "March" },
+    { value: "04", text: "April" },
+    { value: "05", text: "May" },
+    { value: "06", text: "June" },
+    { value: "07", text: "July" },
+    { value: "08", text: "August" },
+    { value: "09", text: "September" },
+    { value: "10", text: "October" },
+    { value: "11", text: "November" },
+    { value: "12", text: "December" },
+  ];
+
+  const years = [
+    { value: "0", text: "Year" },
+    ...Array.from({ length: 100 }, (_, i) => {
+      const y = currentYear - i;
+      return { value: String(y), text: String(y) };
+    }),
+  ];
+  const days = useMemo(() => {
+    const year = parseInt(selectedYear);
+    const month = parseInt(selectedMonth);
+    if (!month || !year) {
+      return Array.from({ length: 31 }, (_, i) => ({
+        value: String(i + 1),
+        text: String(i + 1),
+      }));
+    }
+    const daysInMonth = new Date(year, month, 0).getDate();
+    return Array.from({ length: daysInMonth }, (_, i) => {
+      const value = String(i + 1).padStart(2, "0");
+      return {
+        value,
+        text: value,
+      };
+    });
+  }, [selectedMonth, selectedYear]);
   const initialValues: FormType = {
     name: profile.user.name,
     mobile: profile.user.mobile,
     nid_or_passport: profile.user.nid_or_passport || "",
-    year: "",
-    day: "",
-    month: "",
+    year: year,
+    month: month,
+    day: day,
     address: profile.user.address || "",
   };
 
@@ -84,7 +146,10 @@ export default function ProfileClient() {
         formData.append("address", data.address);
       }
       if (data.day) {
-        formData.append("birthday", date);
+        formData.append(
+          "birthday",
+          profile?.user.birthday ? profile?.user.birthday : date
+        );
       }
       if (data.nid_or_passport) {
         formData.append("nid_or_passport", data.nid_or_passport);
@@ -106,61 +171,6 @@ export default function ProfileClient() {
   });
   const handleSubmit = (data: FormType) => {
     mutate(data);
-  };
-  const [selectedMonth, setSelectedMonth] = useState("0"); // "0" means not selected
-  const [selectedYear, setSelectedYear] = useState("");
-
-  const currentYear = new Date().getFullYear();
-
-  const months = [
-    { value: "0", text: "Month" },
-    { value: "1", text: "January" },
-    { value: "2", text: "February" },
-    { value: "3", text: "March" },
-    { value: "4", text: "April" },
-    { value: "5", text: "May" },
-    { value: "6", text: "June" },
-    { value: "7", text: "July" },
-    { value: "8", text: "August" },
-    { value: "9", text: "September" },
-    { value: "10", text: "October" },
-    { value: "11", text: "November" },
-    { value: "12", text: "December" },
-  ];
-
-  const years = [
-    { value: "0", text: "Year" },
-    ...Array.from({ length: 100 }, (_, i) => {
-      const y = currentYear - i;
-      return { value: String(y), text: String(y) };
-    }),
-  ];
-
-  // 💡 Memoized days list, recalculated only when month or year changes
-  const days = useMemo(() => {
-    const year = parseInt(selectedYear);
-    const month = parseInt(selectedMonth);
-
-    if (!month || !year) {
-      // Default 31 days if month/year not selected
-      return Array.from({ length: 31 }, (_, i) => ({
-        value: String(i + 1),
-        text: String(i + 1),
-      }));
-    }
-
-    // Month is 1-based; JavaScript Date uses 0-based month, so subtract 1
-    const daysInMonth = new Date(year, month, 0).getDate(); // tricky but correct
-
-    return Array.from({ length: daysInMonth }, (_, i) => ({
-      value: String(i + 1),
-      text: String(i + 1),
-    }));
-  }, [selectedMonth, selectedYear]);
-
-  const handleChenge = (value: string) => {
-    setSelectedYear(value);
-    setSelectedMonth(value);
   };
 
   const [formEnable, setFromEnable] = useState(false);
@@ -239,24 +249,6 @@ export default function ProfileClient() {
                     : "Verified"}
                 </span>
               </p>
-              {profile.user.nid_or_passport !== null && (
-                <p className=" space-x-3 text-center">
-                  <span className="font-medium">NID/Passport :</span>
-                  <span>{profile.user.nid_or_passport}</span>
-                </p>
-              )}
-              {profile.user.birthday !== null && (
-                <p className=" space-x-3 text-center">
-                  <span className="font-medium">BirthDay :</span>
-                  <span>{profile.user.birthday}</span>
-                </p>
-              )}
-              {profile.user.address !== null && (
-                <p className=" space-x-3 text-center">
-                  <span className="font-medium">Address :</span>
-                  <span>{profile.user.address}</span>
-                </p>
-              )}
             </div>
 
             <div className="md:col-span-8 col-span-12 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border">
@@ -271,7 +263,7 @@ export default function ProfileClient() {
                   name="name"
                   label="Name"
                   type="text"
-                  placeholder="remon"
+                  placeholder="Enter your name"
                   inputClass=""
                   readOnly={!formEnable}
                 />
@@ -279,7 +271,7 @@ export default function ProfileClient() {
                   name="mobile"
                   label="Mobile"
                   type="number"
-                  placeholder=""
+                  placeholder="Enter mobile number"
                   inputClass=""
                   readOnly={!formEnable}
                 />
@@ -287,6 +279,7 @@ export default function ProfileClient() {
                   name="nid_or_passport"
                   label="NID/PASSPORT NO."
                   type="number"
+                  placeholder="Enter nid or passport number"
                   readOnly={!formEnable}
                 />
                 <div>
@@ -296,7 +289,6 @@ export default function ProfileClient() {
                       <SelectField
                         name="year"
                         options={years}
-                        placeholder=" Year"
                         onChange={handleChenge}
                         readOnly={!formEnable}
                       />
@@ -306,7 +298,6 @@ export default function ProfileClient() {
                       <SelectField
                         name="month"
                         options={months}
-                        placeholder=" Month"
                         onChange={handleChenge}
                         readOnly={!formEnable}
                       />{" "}
@@ -315,14 +306,11 @@ export default function ProfileClient() {
                       <SelectField
                         name="day"
                         options={days}
-                        placeholder="Day"
                         readOnly={!formEnable}
                       />
                     </div>
                   </div>
                 </div>
-
-                {/* <DateField name="dob" label="Date of Birth" /> */}
               </div>
               <div className="mt-3">
                 <TextField
