@@ -17,7 +17,10 @@ import axiosInstance from "@/src/utils/fetch/axiosConfig/axiosConfig";
 import { useMutation } from "@tanstack/react-query";
 import { SelectField } from "@/src/components/form copy/fields/SelectField";
 import { SubmitButton } from "@/src/components/form copy/fields/SubmitButton";
-import { showSuccessModal } from "@/src/components/shared/toastAlert/ToastSuccess";
+import {
+  showErrorModal,
+  showSuccessModal,
+} from "@/src/components/shared/toastAlert/ToastSuccess";
 import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
@@ -49,7 +52,6 @@ export default function ProfileClient() {
     month = String(dateObj.getMonth() + 1).padStart(2, "0"); // Months are 0-based
     year = String(dateObj.getFullYear());
   }
-  console.log("kajsdlfjsldf", day, month, year);
   const [selectedMonth, setSelectedMonth] = useState("0"); // "0" means not selected
   const [selectedYear, setSelectedYear] = useState("");
 
@@ -145,11 +147,10 @@ export default function ProfileClient() {
       if (data.address) {
         formData.append("address", data.address);
       }
-      if (data.day) {
-        formData.append(
-          "birthday",
-          profile?.user.birthday ? profile?.user.birthday : date
-        );
+      if (date !== profile?.user.birthday) {
+        formData.append("birthday", date);
+      } else {
+        formData.append("birthday", profile?.user.birthday);
       }
       if (data.nid_or_passport) {
         formData.append("nid_or_passport", data.nid_or_passport);
@@ -165,8 +166,8 @@ export default function ProfileClient() {
       showSuccessModal("Success", data?.data?.message);
       router.push("/dashboard");
     },
-    onError(err) {
-      console.log(err);
+    onError(err: any) {
+      showErrorModal("!Opps", err.message.errors.image[1]);
     },
   });
   const handleSubmit = (data: FormType) => {
