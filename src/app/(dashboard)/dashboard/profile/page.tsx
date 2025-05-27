@@ -27,6 +27,7 @@ const FormSchema = z.object({
   name: z.string().nonempty({ message: "Enter your name" }),
   mobile: z
     .string()
+    .regex(/^\+?\d+$/, { message: "Mobile number must be number" })
     .min(10, { message: "Enter your mobile" })
     .max(15, { message: "Mobile number is too long" }),
   address: z.string().optional(),
@@ -101,6 +102,7 @@ export default function ProfileClient() {
       };
     });
   }, [selectedMonth, selectedYear]);
+  console.log(profile.user.mobile);
   const initialValues: FormType = {
     name: profile.user.name,
     mobile: profile.user.mobile,
@@ -271,7 +273,7 @@ export default function ProfileClient() {
                 <TextField
                   name="mobile"
                   label="Mobile"
-                  type="number"
+                  type="text"
                   placeholder="Enter mobile number"
                   inputClass=""
                   readOnly={!formEnable}
