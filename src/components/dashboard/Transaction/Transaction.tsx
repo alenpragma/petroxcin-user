@@ -95,7 +95,9 @@ const TransactionComponents = () => {
                 >
                   {item.type === "-" ? "(-)" : "(+)"} ${item.amount}
                 </TData>
-                <TData>{item.remark}</TData>
+                <TData>
+                  {item.remark === "interest" ? "Profit Revenue" : item.remark}
+                </TData>
                 <TData>{item.details}</TData>
                 <TData>
                   <Status title={item.status} />
