@@ -129,6 +129,15 @@ export function Footer() {
                   petroxcin@gmail.com
                 </a>
               </li>
+              <li className="flex items-center">
+                <Phone className="mr-2 h-5 w-5 text-[#C49B3E]" />
+                <a
+                  href="tel:+13235527691"
+                  className="text-gray-300 hover:underline"
+                >
+                  +1 323-552-7691
+                </a>
+              </li>
             </ul>
           </div>
           {/* Newsletter */}
