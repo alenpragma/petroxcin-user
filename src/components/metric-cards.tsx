@@ -45,7 +45,6 @@ export const MetricCards = ({
       ),
     },
   ];
-  const color = "#FFE5FD";
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {metrics.map((metric, index) => (
@@ -62,11 +61,6 @@ export const MetricCards = ({
                 <div className="text-sm text-slate">{metric.title}</div>
                 <div className="text-2xl font-bold">${metric.value}</div>
               </div>
-            </div>
-            <div className="text-sm font-light mt-3 ">
-              Increase by{" "}
-              <span className="text-green-500">{metric.increase}</span> this
-              week
             </div>
           </CardContent>
         </Card>

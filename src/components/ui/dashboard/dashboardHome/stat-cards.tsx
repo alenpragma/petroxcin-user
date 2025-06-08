@@ -1,12 +1,6 @@
 import { Card, CardContent } from "@/src/components/ui/card";
 import { DashboardImage } from "@/src/lib/store/image/image";
 import { IUserProfileResponse } from "@/src/types/dashboard/dashboardType/dashboardType";
-import {
-  ArrowDownToLine,
-  ArrowLeftRight,
-  CircleDollarSign,
-  Users,
-} from "lucide-react";
 import Image from "next/image";
 
 export function StatCards({
@@ -14,6 +8,7 @@ export function StatCards({
 }: {
   profileData: IUserProfileResponse;
 }) {
+  console.log(profileData)
   const stats = [
     {
       title: "Total Withdraw",
