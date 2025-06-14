@@ -17,6 +17,9 @@ export function DashboardPage() {
   }
   return (
     <>
+      <div className="md:hidden block">
+        <WalletCards profileData={profileData} />
+      </div>
       <MetricCards profileData={profileData} />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="lg:col-span-1 space-y-6">
@@ -24,7 +27,9 @@ export function DashboardPage() {
           <EarningStatistic profileData={profileData} />
         </div>
         <div className="space-y-6">
-          <WalletCards profileData={profileData} />
+          <div className="md:block hidden">
+            <WalletCards profileData={profileData} />
+          </div>{" "}
           <StatCards profileData={profileData} />
           <ReferralLink refer={profileData.user.refer_code} />
         </div>
