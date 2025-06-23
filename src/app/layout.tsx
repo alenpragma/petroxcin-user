@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "../components/theme-provider";
-import MainProvider from "../components/Provider/MainProvider";
+import { ThemeProvider } from "@/src/components/theme-provider";
+import MainProvider from "@/src/components/Provider/MainProvider";
+import { Suspense } from "react";
+import ProgressBar from "@/src/lib/progress/Progressbar";
 
 // Font config
 const geistSans = Geist({
@@ -39,6 +41,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Suspense fallback={null}>
+          <ProgressBar />
+        </Suspense>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
