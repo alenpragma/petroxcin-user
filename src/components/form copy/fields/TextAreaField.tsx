@@ -7,32 +7,32 @@
  * Last Modified At: Null
  * Version: 0.1.0
  */
-import { cn } from '@/lib/utils';
-import { LucideIcon, X } from 'lucide-react';
-import { FieldValues, Path, useFormContext } from 'react-hook-form';
-import { Button } from '../../ui/button';
+import { LucideIcon, X } from "lucide-react";
+import { FieldValues, Path, useFormContext } from "react-hook-form";
+import { Button } from "../../ui/button";
 import {
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from '../../ui/form';
-import { LoadingSpinner } from '../../ui/loading-spinner';
-import { Textarea } from '../../ui/textarea';
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../../ui/form";
+import { LoadingSpinner } from "../../ui/loading-spinner";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/src/lib/utils";
 
 interface Props<T extends FieldValues> {
-	name: Path<T>;
-	label?: string;
-	required?: boolean;
-	placeholder?: string;
-	resizable?: boolean;
-	autoResize?: boolean;
-	action?: () => void;
-	Icon?: LucideIcon;
-	loading?: boolean;
-	className?: string;
-	inputClassName?: string;
+  name: Path<T>;
+  label?: string;
+  required?: boolean;
+  placeholder?: string;
+  resizable?: boolean;
+  autoResize?: boolean;
+  action?: () => void;
+  Icon?: LucideIcon;
+  loading?: boolean;
+  className?: string;
+  inputClassName?: string;
 }
 /**
  * TextareaField component
@@ -57,64 +57,69 @@ interface Props<T extends FieldValues> {
  * ```
  */
 export const TextareaField = <T extends FieldValues>({
-	name,
-	label,
-	placeholder,
-	required = false,
-	resizable = false,
-	autoResize = false,
-	action,
-	Icon = X,
-	loading,
-	className,
-	inputClassName,
+  name,
+  label,
+  placeholder,
+  required = false,
+  resizable = false,
+  autoResize = false,
+  action,
+  Icon = X,
+  loading,
+  className,
+  inputClassName,
 }: Props<T>) => {
-	const { control } = useFormContext<T>();
+  const { control } = useFormContext<T>();
 
-	return (
-		<FormField
-			name={name}
-			control={control}
-			render={({ field }) => (
-				<FormItem className={cn(className)}>
-					{label && (
-						<FormLabel>
-							<span>{label}</span>
-							{required && <span className="ml-1 text-red-500">*</span>}
-						</FormLabel>
-					)}
-					<FormControl>
-						<div className="relative flex items-center gap-2">
-							<Textarea
-								{...field}
-								placeholder={placeholder ?? 'Enter a value'}
-								className={cn(
-									'w-full',
-									action && 'pr-12',
-									resizable === false && 'resize-none',
-									inputClassName
-								)}
-								autoResize={autoResize}
-							/>
-							{loading && <LoadingSpinner className="absolute right-4" />}
-							{action && (
-								<Button
-									variant={'ghost'}
-									size={'sm'}
-									onClick={action}
-									type="button"
-									className="absolute right-0.5 top-0.5"
-								>
-									<Icon size={16} className="text-muted-foreground" />
-								</Button>
-							)}
-						</div>
-					</FormControl>
-					<FormMessage />
-				</FormItem>
-			)}
-		/>
-	);
+  return (
+    <FormField
+      name={name}
+      control={control}
+      render={({ field }) => (
+        <FormItem className={cn(className)}>
+          {label && (
+            <FormLabel>
+              <span>{label}</span>
+              {required && <span className="ml-1 text-red-500">*</span>}
+            </FormLabel>
+          )}
+          <FormControl>
+            <div className="relative flex items-center gap-2">
+              <Textarea
+                {...field}
+                placeholder={placeholder ?? "Enter a value"}
+                className={cn(
+                  "w-full",
+                  action && "pr-12",
+                  resizable === false && "resize-none",
+                  inputClassName
+                )}
+                {...(autoResize && {
+                  onInput: (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                    e.target.style.height = "auto";
+                    e.target.style.height = `${e.target.scrollHeight}px`;
+                  },
+                })}
+              />
+              {loading && <LoadingSpinner className="absolute right-4" />}
+              {action && (
+                <Button
+                  variant={"ghost"}
+                  size={"sm"}
+                  onClick={action}
+                  type="button"
+                  className="absolute right-0.5 top-0.5"
+                >
+                  <Icon size={16} className="text-muted-foreground" />
+                </Button>
+              )}
+            </div>
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
 };
 
-TextareaField.displayName = 'TextareaField';
+TextareaField.displayName = "TextareaField";

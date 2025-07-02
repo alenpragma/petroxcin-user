@@ -30,15 +30,20 @@ const HeroSection = () => {
               Start Investing <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
-          <Link href="/dashboard">
+          <a
+            href="/Petroxcin.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            download 
+          >
             <Button
               size="lg"
               variant="outline"
               className="border-white text-white bg-white/10"
             >
-              View Investment Plans
+              Download Whitepaper
             </Button>
-          </Link>
+          </a>
         </div>
       </div>
 
