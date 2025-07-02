@@ -6,7 +6,6 @@ import {
   PlusCircle,
   ListChecks,
   History,
-  // ArrowLeftRight,
   ArrowDownToLine,
   RefreshCw,
   BarChart2,
@@ -28,9 +27,22 @@ interface SidebarProps {
 
 export function Sidebar({ open, setOpen }: SidebarProps) {
   const pathname = usePathname();
-  const [referralOpen, setReferralOpen] = useState(false);
+
+  // Manage open/closed state for each dropdown using label as key
+  const [openDropdowns, setOpenDropdowns] = useState<Record<string, boolean>>({});
+
   useEffect(() => {
+    // Close sidebar on route change
     setOpen(false);
+
+    // Auto-open dropdowns with active child route
+    const newDropdowns: Record<string, boolean> = {};
+    navItems.forEach((item) => {
+      if (item.children?.some((child) => child.href === pathname)) {
+        newDropdowns[item.label] = true;
+      }
+    });
+    setOpenDropdowns(newDropdowns);
   }, [pathname]);
 
   const navItems = [
@@ -62,6 +74,14 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
       label: "KYC verification",
       href: "/dashboard/kyc-verification",
     },
+    {
+      icon: Users,
+      label: "Support Ticket",
+      children: [
+        { label: "Create New Ticket", href: "/dashboard/create-ticket" },
+        { label: "All Ticket", href: "/dashboard/all-ticket" },
+      ],
+    },
     { icon: LogOut, label: "Sign Out", href: "/logout" },
   ];
 
@@ -73,6 +93,7 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
           onClick={() => setOpen(false)}
         />
       )}
+
       <aside
         className={cn(
           "fixed inset-y-0 left-0 z-50 w-64 bg-white border-r transform transition-transform duration-200 ease-in-out md:translate-x-0 md:relative md:z-0",
@@ -84,12 +105,18 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
             <Image className="w-44 mt-3" src={Images.logo} alt="img" />
           </Link>
         </div>
+
         <nav className="p-4 space-y-1">
           {navItems.map((item, index) =>
             item.children ? (
               <div key={index}>
                 <button
-                  onClick={() => setReferralOpen(!referralOpen)}
+                  onClick={() =>
+                    setOpenDropdowns((prev) => ({
+                      ...prev,
+                      [item.label]: !prev[item.label],
+                    }))
+                  }
                   className={cn(
                     "flex items-center justify-between w-full px-3 py-2 rounded-md text-sm font-medium transition-colors",
                     item.children.some((child) => child.href === pathname)
@@ -102,12 +129,14 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
                     <span>{item.label}</span>
                   </div>
                   <ChevronDown
-                    className={`h-4 w-4 transition-transform ${
-                      referralOpen ? "rotate-180" : ""
-                    }`}
+                    className={cn(
+                      "h-4 w-4 transition-transform",
+                      openDropdowns[item.label] ? "rotate-180" : ""
+                    )}
                   />
                 </button>
-                {referralOpen && (
+
+                {openDropdowns[item.label] && (
                   <div className="ml-8 mt-1 space-y-1">
                     {item.children.map((child, i) => (
                       <Link

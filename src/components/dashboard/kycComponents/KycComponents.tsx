@@ -133,7 +133,7 @@ const KycComponents = ({
 
   return (
     <>
-      {profileData.user.kyc_status === "0" ? (
+      {profileData.user.kyc_status !== "0" ? (
         <div className="md:w-1/2 w-full mx-auto">
           <div className="text-center">
             <h6 className="font-medium text-[20px]">Document Upload</h6>

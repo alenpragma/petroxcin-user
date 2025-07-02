@@ -62,7 +62,6 @@ export default function RegisterForm() {
       showSuccessModal("Success",  data?.data?.message);
     },
     onError(err: any) {
-      console.log('Full error:', err);
       const mobileError = err?.message?.errors?.mobile?.[0];
       const emailField = err?.message?.errors?.email;
       const emailError = Array.isArray(emailField) ? emailField[0] : emailField;
