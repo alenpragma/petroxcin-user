@@ -59,6 +59,7 @@ const KycComponents = ({
       handleFileChange(file, name);
     }
   };
+
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: FormType) => {
       const formData = new FormData();
@@ -82,9 +83,10 @@ const KycComponents = ({
       console.log(err?.message);
     },
   });
+
   const handleSubmit = (data: FormType) => {
     if (!preview1 || !preview2) {
-      showErrorModal("!Opps", "Please input valid image");
+      showErrorModal("Oops!", "Please input valid image");
     } else {
       mutate(data);
     }
@@ -133,7 +135,15 @@ const KycComponents = ({
 
   return (
     <>
-      {profileData.user.kyc_status !== "0" ? (
+      {Number(profileData.user.kyc_status) === 1 ? (
+        <p className="text-green-500 text-center font-medium">
+          You're already KYC verified
+        </p>
+      ) : Number(profileData.user.kyc_status) === 3 ? (
+        <p className="text-yellow-500 text-center font-medium">
+          Your KYC verification is pending
+        </p>
+      ) : (
         <div className="md:w-1/2 w-full mx-auto">
           <div className="text-center">
             <h6 className="font-medium text-[20px]">Document Upload</h6>
@@ -172,11 +182,9 @@ const KycComponents = ({
               label="Submit"
               isLoading={isPending}
               loadingLabel="Processing.."
-            />{" "}
+            />
           </GenericForm>
         </div>
-      ) : (
-        <p className="text-green-500">You'r allready kyc verified</p>
       )}
     </>
   );
