@@ -128,7 +128,7 @@ const PlanListComponents = ({ packageList }: { packageList: IPlan[] }) => {
               </div>
             </div>
             <Dialog.Portal>
-              <Dialog.Overlay className="fixed inset-0 bg-black/50 z-40" />
+              <Dialog.Overlay className="fixed inset-0 bg-[#0000000c] z-40" />
               {selectedPlan && (
                 <Dialog.Content className="fixed top-1/2 left-1/2 w-[90vw] max-w-md -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-lg z-50">
                   <Dialog.Title className="text-lg font-medium">
