@@ -126,7 +126,7 @@ const InvestHistoryComponents = () => {
                     )}
                     disabled={Number(item.status) === 0}
                   >
-                    Cancel button
+                    Cancel
                   </button>
                 </TData>
               </tr>
