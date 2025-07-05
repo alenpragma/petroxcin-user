@@ -8,14 +8,25 @@ import { IInvestHistory } from "@/src/types/dashboard/investHistory/investHostor
 import Pagination from "@/src/components/pagination/Pagination";
 import Status from "@/src/components/shared/Status/Status";
 import { SkeletonRow } from "@/src/components/shared/skelton/Skelton";
-
+import { useMutation } from "@tanstack/react-query";
+import axiosInstance from "@/src/utils/fetch/axiosConfig/axiosConfig";
+import {
+  showErrorModal,
+  showSuccessModal,
+} from "../../shared/toastAlert/ToastSuccess";
+import Swal from "sweetalert2";
+import { cn } from "@/src/lib/utils";
 
 const InvestHistoryComponents = () => {
   const [page, setPage] = useState(1);
   const queryParams = new URLSearchParams();
   queryParams.append("per_page", "10");
   queryParams.append("page", page.toString());
-  const { data: investHistory, isLoading } = useGetData(
+  const {
+    data: investHistory,
+    isLoading,
+    refetch,
+  } = useGetData(
     ["investHistory", page],
     `/invest-history?${queryParams.toString()}`
   );
@@ -31,7 +42,53 @@ const InvestHistoryComponents = () => {
     "Received Day",
     "Duration",
     "Status",
+    "Action",
   ];
+
+  const cancelInvestMutation = useMutation({
+    mutationFn: async (id: number) => {
+      const response = await axiosInstance.post(`/cancel-invest`, { id: id });
+      return response.data;
+    },
+    onSuccess: (data) => {
+      showSuccessModal("Success", "Successfuly canceled");
+      refetch();
+    },
+    onError: (error: any) => {
+      showErrorModal("Oops!", error.message.message);
+    },
+  });
+
+  const handleClick = (id: number) => {
+    const swalWithCustomClass = Swal.mixin({
+      customClass: {
+        popup: "rounded-lg shadow-lg p-6 w-fit",
+        title: "text-xl font-semibold text-gray-800",
+        htmlContainer: "text-sm text-gray-600",
+        confirmButton: "bg-[#28a02e] px-3 py-1 text-white rounded",
+        cancelButton: "bg-[#f34c4c]  px-3 py-1 text-white rounded",
+        actions: "flex gap-2 justify-end mt-4",
+      },
+      buttonsStyling: false, // must be false for custom classes to apply
+    });
+
+    swalWithCustomClass
+      .fire({
+        title: "Are you sure?",
+        text: "You cancel this package?",
+        showCancelButton: true,
+        confirmButtonText: "Yes, cancel it",
+        cancelButtonText: "No, cancel",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          cancelInvestMutation.mutate(id);
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+        }
+      });
+  };
+
   return (
     <div className="bg-white">
       <div className="p-4">
@@ -53,11 +110,24 @@ const InvestHistoryComponents = () => {
                 <TData>{item.total_receive_day} Days</TData>
                 <TData>{item.duration} Days</TData>
                 <TData>
-                  {item.status === "1" ? (
+                  {Number(item.status) === 1 ? (
                     <Status title="Active" />
                   ) : (
-                    <Status title="In Active" />
+                    <Status title="Canceled" />
                   )}
+                </TData>{" "}
+                <TData>
+                  <button
+                    onClick={() => handleClick(item.id)}
+                    className={cn(
+                      "px-3 py-1 text-red-500 hover:text-red-700 bg-gray-200 hover:bg-red-100 border rounded",
+                      Number(item.status) === 0 &&
+                        "cursor-not-allowed opacity-50"
+                    )}
+                    disabled={Number(item.status) === 0}
+                  >
+                    Cancel button
+                  </button>
                 </TData>
               </tr>
             ))}

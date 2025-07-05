@@ -23,7 +23,6 @@ import { CiLock } from "react-icons/ci";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import { useMutation } from "@tanstack/react-query";
 import axiosInstance from "@/src/utils/fetch/axiosConfig/axiosConfig";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Images } from "@/src/lib/store/image/image";
 import {
@@ -44,7 +43,6 @@ const initialValues: FormType = {
 };
 
 export default function LoginFormComponent() {
-  const router = useRouter();
   const formRef = useRef<GenericFormRef<FormType>>(null);
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: FormType | React.FormEvent<HTMLFormElement>) => {
@@ -54,7 +52,6 @@ export default function LoginFormComponent() {
     onSuccess: (data: any) => {
       if (data?.data?.success === true) {
         Cookies.set("petroxcinToken", data?.data?.data?.token, { expires: 3 });
-        // router.push("/dashboard");
         window.location.href = "/dashboard";
         showSuccessModal("Success", data?.data?.message);
       } else {

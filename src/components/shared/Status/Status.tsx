@@ -4,7 +4,7 @@ const Status = ({ title }: { title: string }) => {
   return (
     <button
       className={cn(
-        "w-[120px] py-2 rounded font-medium",
+        "w-[120px] py-2 rounded font-medium cursor-default",
         title === "Running" ||
           (title === "Active" &&
             "text-[#21a439]  w-fit"),
@@ -15,6 +15,7 @@ const Status = ({ title }: { title: string }) => {
         title === "paid" && "text-[#21a439] w-fit",
         title === "Pending" && "text-[#FFA800] w-fit",
         title === "Expired" && "text-[#f62d2d] w-fit",
+        title === "Canceled" && "text-[#f62d2d] w-fit",
       )}
     >
       {title}
