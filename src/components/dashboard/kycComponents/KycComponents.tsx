@@ -136,12 +136,12 @@ const KycComponents = ({
   return (
     <>
       {Number(profileData.user.kyc_status) === 1 ? (
-        <p className="text-green-500 text-center font-medium">
-          You're already KYC verified
+        <p className="text-green-600 text-base font-medium">
+          ✅ You're already KYC verified
         </p>
-      ) : Number(profileData.user.kyc_status) === 3 ? (
-        <p className="text-yellow-500 text-center font-medium">
-          Your KYC verification is pending
+      ) : Number(profileData.user.kyc_status) === 2 ? (
+        <p className="text-yellow-500 text-base font-medium">
+          ⏳ Your KYC verification is pending
         </p>
       ) : (
         <div className="md:w-1/2 w-full mx-auto">

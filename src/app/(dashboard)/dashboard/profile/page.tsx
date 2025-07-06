@@ -22,6 +22,7 @@ import {
   showSuccessModal,
 } from "@/src/components/shared/toastAlert/ToastSuccess";
 import { useRouter } from "next/navigation";
+import { cn } from "@/src/lib/utils";
 
 const FormSchema = z.object({
   name: z.string().nonempty({ message: "Enter your name" }),
@@ -246,9 +247,19 @@ export default function ProfileClient() {
               <p className="text-center">{profile.user.email}</p>
               <p className=" space-x-3 text-center">
                 <span className="font-medium">KYC Verified :</span>
-                <span>
-                  {profile.user.kyc_status === "0"
+                <span
+                  className={cn(
+                    Number(profile.user.kyc_status) === 0
+                      ? "text-red-500"
+                      : Number(profile.user.kyc_status) === 2
+                      ? "text-yellow-500"
+                      : "text-green-500"
+                  )}
+                >
+                  {Number(profile.user.kyc_status) === 0
                     ? "Not Verified"
+                    : Number(profile.user.kyc_status) === 2
+                    ? "Pending"
                     : "Verified"}
                 </span>
               </p>
