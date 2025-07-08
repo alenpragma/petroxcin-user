@@ -1,2 +1,2 @@
 Updated dashboard
-Hello Team....
+Hello Team..
