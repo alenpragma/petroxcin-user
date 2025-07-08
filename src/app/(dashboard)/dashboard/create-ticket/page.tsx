@@ -1,36 +1,72 @@
 "use client";
 
+import { SubmitButton } from "@/src/components/form copy/fields/SubmitButton";
 import { TextareaField } from "@/src/components/form copy/fields/TextAreaField";
 import { TextField } from "@/src/components/form copy/fields/TextField";
 import {
   GenericForm,
   GenericFormRef,
 } from "@/src/components/form copy/GenericForm";
-import FormSelectField from "@/src/components/Form/FormSelectField";
+import {
+  showErrorModal,
+  showSuccessModal,
+} from "@/src/components/shared/toastAlert/ToastSuccess";
 import { supportTicketSchema } from "@/src/schema/supportTicket/supportTicket";
+import axiosInstance from "@/src/utils/fetch/axiosConfig/axiosConfig";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import { z } from "zod";
 
 // ✅ Define FormType outside the component
 type FormType = z.infer<typeof supportTicketSchema>;
 
-const options = [
-  { label: "High", value: "high" },
-  { label: "Medium", value: "medium" },
-  { label: "Low", value: "low" },
-];
-
 const CreateTicketPage = () => {
   const formRef = useRef<GenericFormRef<FormType>>(null);
 
   const initialValues: FormType = {
     subject: "",
-    priority: "high",
+    images: new File([], ""),
     message: "",
   };
+  const router = useRouter();
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: FormType | React.FormEvent<HTMLFormElement>) => {
+      if ("preventDefault" in data) return;
 
-  const handleSubmit = (data: FormType | React.FormEvent<HTMLFormElement>) => {
-    console.log("Form Submitted:", data);
+      const formData = new FormData();
+      formData.append("subject", data.subject);
+      formData.append("message", data.message);
+
+      // Only append image if it's not empty or a placeholder
+      if (data.images && data.images.name !== "") {
+        formData.append("images", data.images);
+      }
+
+      const response = await axiosInstance.post(`/tickets`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      return response;
+    },
+    onSuccess: (data: any) => {
+      if (data?.data?.success === true) {
+        showSuccessModal("Success", "Message sent successfully");
+        router.push("/dashboard/all-ticket");
+      }
+    },
+    onError() {
+      showErrorModal("Oops!", "Something went wrong");
+    },
+  });
+
+  const handleSubmit = async (
+    data: FormType | React.FormEvent<HTMLFormElement>
+  ) => {
+    if ("preventDefault" in data) return;
+    mutate(data);
   };
 
   return (
@@ -50,27 +86,24 @@ const CreateTicketPage = () => {
             inputClass="bg-white"
             placeholder="Enter the subject"
           />
-
-          <div>
-            <label className="block font-medium mb-1">Priority</label>
-            <FormSelectField
-              name="priority"
-              options={options}
-            />
-          </div>
-
           <TextareaField
             name="message"
             label="Message"
             placeholder="Enter your message here..."
           />
-
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-          >
-            Submit Ticket
-          </button>
+          <TextField
+            name="images"
+            label="Images"
+            type="file"
+            inputClass="bg-white"
+            placeholder="Enter the image"
+          />
+          <SubmitButton
+            width="full"
+            label="Submit Ticket"
+            isLoading={isPending}
+            loadingLabel="Processing.."
+          />
         </div>
       </GenericForm>
     </div>

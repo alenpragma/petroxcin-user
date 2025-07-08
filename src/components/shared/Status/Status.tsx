@@ -16,6 +16,7 @@ const Status = ({ title }: { title: string }) => {
         title === "Pending" && "text-[#FFA800] w-fit",
         title === "Expired" && "text-[#f62d2d] w-fit",
         title === "Canceled" && "text-[#f62d2d] w-fit",
+        title === "Inactive" && "text-[#f62d2d] w-fit",
       )}
     >
       {title}

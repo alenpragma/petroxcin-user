@@ -65,7 +65,6 @@ export default function RegisterForm() {
       const mobileError = err?.message?.errors?.mobile?.[0];
       const emailField = err?.message?.errors?.email;
       const emailError = Array.isArray(emailField) ? emailField[0] : emailField;
-    
       if (mobileError || emailError) {
         showErrorModal("Oops!", mobileError || emailError);
       }
