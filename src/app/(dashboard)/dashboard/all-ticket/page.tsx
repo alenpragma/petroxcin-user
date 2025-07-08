@@ -1,41 +1,28 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link"; // Import Link
 import { formatDistanceToNow } from "date-fns";
 import Status from "@/src/components/shared/Status/Status";
 import UseTable, { TData } from "@/src/components/shared/table/UseTable";
-
-type ChatItem = {
-  id: number;
-  number: string;
-  subject: string;
-  created_at: string;
-  updated_at: string;
-  status: "Active" | "Inactive";
-};
-
-const chatList: ChatItem[] = [
-  {
-    id: 1,
-    number: "#84574",
-    subject: "Order Issue",
-    created_at: "2025-06-25",
-    updated_at: "2025-06-28",
-    status: "Active",
-  },
-  {
-    id: 2,
-    number: "#843474",
-    subject: "Order Issue",
-    created_at: "2025-06-30",
-    updated_at: "2025-07-01",
-    status: "Active",
-  },
-];
+import { useGetData } from "@/src/utils/fetch/axiosConfig/FetchData";
+import Loadingcomponents from "@/src/components/shared/loadingComponents/LoadingComponents";
 
 const AllTicketPage = () => {
   const headers = ["Number", "Subject", "Status", "Submitted", "Last Reply"];
-  const router = useRouter();
+  const { data: allTickets, isLoading } = useGetData(["allTicket"], `tickets`);
+
+  if (isLoading) return <Loadingcomponents />;
+
+  const chatList = Array.isArray(allTickets)
+    ? allTickets.map((ticket: any) => ({
+        id: ticket.id,
+        number: ticket.ticket_id,
+        subject: ticket.subject,
+        status: ticket.status === "open" ? "Active" : "Inactive",
+        created_at: ticket.created_at,
+        updated_at: ticket.updated_at,
+      }))
+    : [];
 
   return (
     <div className="md:w-4/5 w-full mx-auto mt-10 space-y-4">
@@ -44,21 +31,48 @@ const AllTicketPage = () => {
       ) : (
         <UseTable headers={headers} className="rounded-md">
           {chatList.map((item) => (
-            <tr
-              key={item.id}
-              onClick={() => router.push(`/dashboard/ticket/${item.id}`)}
-              className="hover:bg-gray-100 transition-colors cursor-pointer"
-            >
-              <TData>{item.number}</TData>
-              <TData>{item.subject}</TData>
+            <tr key={item.id} className="hover:bg-gray-100 transition-colors">
               <TData>
-                <Status title={item.status} />
+                <Link
+                  href={`/dashboard/ticket/${item.id}`}
+                  className="block w-full"
+                >
+                  {item.number}
+                </Link>
               </TData>
-              <TData>{item.created_at}</TData>
               <TData>
-                {formatDistanceToNow(new Date(item.updated_at), {
-                  addSuffix: true,
-                })}
+                <Link
+                  href={`/dashboard/ticket/${item.id}`}
+                  className="block w-full"
+                >
+                  {item.subject}
+                </Link>
+              </TData>
+              <TData>
+                <Link
+                  href={`/dashboard/ticket/${item.id}`}
+                  className="block w-full"
+                >
+                  <Status title={item.status} />
+                </Link>
+              </TData>
+              <TData>
+                <Link
+                  href={`/dashboard/ticket/${item.id}`}
+                  className="block w-full"
+                >
+                  {new Date(item.created_at).toLocaleDateString()}
+                </Link>
+              </TData>
+              <TData>
+                <Link
+                  href={`/dashboard/ticket/${item.id}`}
+                  className="block w-full"
+                >
+                  {formatDistanceToNow(new Date(item.updated_at), {
+                    addSuffix: true,
+                  })}
+                </Link>
               </TData>
             </tr>
           ))}
