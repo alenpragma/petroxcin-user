@@ -6,34 +6,32 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
 import { Button } from "@/src/components/ui/button";
 import { Card, CardContent } from "@/src/components/ui/card";
+import { testimonials } from "@/src/lib/store/image/image";
 
-const testimonials = [
+const testimonialData = [
   {
     id: 1,
     content:
       "I've been investing in oil and gas for over a decade, and EnergyInvest has consistently delivered the best returns with minimal hassle. Their team's expertise is unmatched.",
-    author: "Michael Thompson",
+    author: "David Langston",
     title: "CEO, Thompson Ventures",
-    image:
-      "https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?semt=ais_hybrid&w=740",
+    image: testimonials.testimonials1,
   },
   {
     id: 2,
     content:
       "As someone new to energy investments, I was looking for a trustworthy platform. EnergyInvest provided clear guidance and their diversified portfolio has performed exceptionally well.",
-    author: "Sarah Johnson",
+    author: "Carlos Mendoza",
     title: "Financial Advisor",
-    image:
-      "https://www.shutterstock.com/image-photo/attractive-positive-african-american-young-600nw-2464015801.jpg",
+    image: testimonials.testimonials2,
   },
   {
     id: 3,
     content:
       "The quarterly dividends from my Oil Bonds investment have provided the stable income I was looking for in retirement. Highly recommend their fixed income options.",
-    author: "Robert Williams",
+    author: "Andrei Volkov",
     title: "Retired Investment Banker",
-    image:
-      "https://static.vecteezy.com/system/resources/thumbnails/005/346/410/small_2x/close-up-portrait-of-smiling-handsome-young-caucasian-man-face-looking-at-camera-on-isolated-light-gray-studio-background-photo.jpg",
+    image: testimonials.testimonials3,
   },
 ];
 
@@ -41,12 +39,13 @@ export function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const nextTestimonial = () => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+    setActiveIndex((prevIndex) => (prevIndex + 1) % testimonialData.length);
   };
 
   const prevTestimonial = () => {
     setActiveIndex(
-      (prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length
+      (prevIndex) =>
+        (prevIndex - 1 + testimonialData.length) % testimonialData.length
     );
   };
 
@@ -71,23 +70,23 @@ export function Testimonials() {
                   <div className="relative mb-4 h-24 w-24 overflow-hidden rounded-full">
                     <Image
                       src={
-                        testimonials[activeIndex].image || "/placeholder.svg"
+                        testimonialData[activeIndex].image || "/placeholder.svg"
                       }
-                      alt={testimonials[activeIndex].author}
+                      alt={testimonialData[activeIndex].author}
                       fill
                       className="object-cover"
                     />
                   </div>
                   <h4 className="text-center font-serif text-lg font-bold text-[#0A1F44]">
-                    {testimonials[activeIndex].author}
+                    {testimonialData[activeIndex].author}
                   </h4>
                   <p className="text-center text-sm text-gray-500">
-                    {testimonials[activeIndex].title}
+                    {testimonialData[activeIndex].title}
                   </p>
                 </div>
                 <div className="flex items-center">
                   <p className="text-lg text-gray-700">
-                    {testimonials[activeIndex].content}
+                    {testimonialData[activeIndex].content}
                   </p>
                 </div>
               </div>
@@ -105,7 +104,7 @@ export function Testimonials() {
               <span className="sr-only">Previous testimonial</span>
             </Button>
             <div className="flex items-center gap-2">
-              {testimonials.map((_, index) => (
+              {testimonialData.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setActiveIndex(index)}
