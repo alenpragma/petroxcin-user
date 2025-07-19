@@ -75,10 +75,10 @@
   }
 }
 .input-style {
-  @apply w-full rounded px-3 py-1 text-slate
+  @apply w-full rounded px-3 py-1 text-slate;
 }
 
-.react-international-phone-input{
+.react-international-phone-input {
   width: 100% !important;
 }
 
@@ -93,7 +93,6 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
-
 
 /* ********************* toast style */
 .custom-toast-class {
@@ -139,3 +138,15 @@ input[type="number"] {
 }
 
 /* ********************* toast style */
+
+/* ********************* swiper style */
+
+.mySwiper {
+  padding-bottom: 50px !important;
+}
+.swiper-pagination-bullet {
+  width: 14px !important;
+  height: 14px !important;
+  background-color: rgb(7, 141, 243) !important;
+}
+/* ********************* swiper style */

@@ -63,3 +63,22 @@ export const landingImage = {
   image3,
 };
 // ------------------  landing page image
+// ------------------  testimonilas image
+import testimonials1 from "@/src/assets/images/testimonials/image-1.jpg"
+import testimonials2 from "@/src/assets/images/testimonials/image-2.jpg"
+import testimonials3 from "@/src/assets/images/testimonials/image-3.jpg"
+export const testimonials = {
+  testimonials1,
+  testimonials2,
+  testimonials3
+}
+// ------------------  testimonilas image
+
+// ------------------  testimonilas image
+
+import rewardBanner from "@/src/assets/images/reward/reward.jpg"
+export const rewardImage = {
+  rewardBanner
+}
+// ------------------  testimonilas image
+
