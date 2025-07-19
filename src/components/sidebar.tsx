@@ -14,6 +14,8 @@ import {
   LogOut,
   ChevronDown,
 } from "lucide-react";
+import { GiRank3 } from "react-icons/gi";
+
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -73,6 +75,11 @@ export function Sidebar({ open, setOpen }: SidebarProps) {
       icon: LifeBuoy,
       label: "KYC verification",
       href: "/dashboard/kyc-verification",
+    },
+    {
+      icon: GiRank3,
+      label: " Rank & Reward",
+      href: "/dashboard/rank-and-reward",
     },
     {
       icon: Users,

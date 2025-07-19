@@ -73,3 +73,12 @@ export const testimonials = {
   testimonials3
 }
 // ------------------  testimonilas image
+
+// ------------------  testimonilas image
+
+import rewardBanner from "@/src/assets/images/reward/reward.jpg"
+export const rewardImage = {
+  rewardBanner
+}
+// ------------------  testimonilas image
+
