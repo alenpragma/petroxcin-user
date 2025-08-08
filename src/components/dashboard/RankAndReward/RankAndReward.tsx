@@ -98,10 +98,10 @@ const RankAndRewardComponent = () => {
                       {item.teamMember}
                     </TData>
                     <TData className={isLast ? "border-b-0" : ""}>
-                      {item.reward}
+                      {item.teamSale}
                     </TData>
                     <TData className={isLast ? "border-b-0" : ""}>
-                      {item.teamSale}
+                       {item.reward}
                     </TData>
                   </tr>
                 );
