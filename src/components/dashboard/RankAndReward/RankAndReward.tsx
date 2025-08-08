@@ -37,7 +37,7 @@ const RankAndRewardComponent = () => {
   ];
 
   const headers = [
-    "Lavel",
+    "Level",
     "Personal Sponsor",
     "Total Team Member",
     " Total Team Sale",
