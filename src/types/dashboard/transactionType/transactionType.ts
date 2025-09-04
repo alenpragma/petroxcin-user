@@ -29,6 +29,7 @@ export interface ITransactions {
   amount: number;
   remark: string;
   type: string;
+  charge : string;
   status: string;
   details: string;
   created_at: string;
