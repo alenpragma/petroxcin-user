@@ -36,7 +36,7 @@ const initialValues: FormType = {
   transaction_id: "",
 };
 
-const WALLET_ADDRESS = "0xbC526405276a660046E43284463013447DDC7C07";
+const WALLET_ADDRESS = "0xd58399f4deF874582bb17b93De175B9BF7DfEB1c";
 
 const AddFundComponent = () => {
   const formRef = useRef<GenericFormRef<FormType>>(null);
